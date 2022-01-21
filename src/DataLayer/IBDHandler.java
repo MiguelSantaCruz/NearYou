@@ -11,16 +11,29 @@ public interface IBDHandler {
      * @param email O email do utilizador
      * @param password A password do utilizador
      * @param permissao 1 caso utilizador normal, 2 se moderador, 3 se administrador
-     * @return O id do utilizador
+     * @return O id do utilizador, -1 se erro
      */
     int addUtilizador(String username, String email, String password, int permissao);
 
+    /**
+     * Verifica um nivel de permissao de um determindado utilizador
+     * @return 1 caso utilizador normal, 2 se moderador, 3 se administrador, -1 caso contrário
+     */
     int nivelDePermissao(String UserID);
 
+    /**
+     * Verifica se um determinado utilizador está bloqueado
+     * @return true caso o utilizador esteja bloqueado, false caso contrário
+     */
     boolean verificaBloqueado(String userID);
 
     boolean bloqUser(String userID);
 
+    /**
+     * Procura um entrada de utilizador na base de dados cujo email e a palavra-
+     * passe correspondam aos fornecidos.
+     * @returns Em caso de sucesso, retorna o id de utilizador. Caso contrário, retorna ’null’
+     */
     String verificaLogin(String email, String password);
 
     String recuperaPassword(String email);

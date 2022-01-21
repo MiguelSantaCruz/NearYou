@@ -1,6 +1,4 @@
 package DataLayer;
 
-import DataLayer.IBDHandler;
-
-public class BDHandler implements IBDHandler {
+public class BDHandler /*implements IBDHandler*/ {
 }

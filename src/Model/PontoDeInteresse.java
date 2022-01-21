@@ -76,6 +76,7 @@ public class PontoDeInteresse {
         this.classificacaoMedia = classificacaoMedia;
     }
 
+    /*
     public void carregaReviews(){
 
     }
@@ -86,5 +87,5 @@ public class PontoDeInteresse {
 
     public void calculaClassificacaoMedia(){
 
-    }
+    }*/
 }

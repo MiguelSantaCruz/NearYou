@@ -1,8 +1,7 @@
 package Model;
 
-import java.util.List;
-
 public class APIHandler {
+    /*
     public String localizaUser(){
 
     }
@@ -25,5 +24,5 @@ public class APIHandler {
 
     public PontoDeInteresse (String idPI){
 
-    }
+    }*/
 }
