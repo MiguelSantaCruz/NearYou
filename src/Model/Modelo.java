@@ -241,10 +241,10 @@ public class Modelo /*implements IModelo*/{
         return null;
     }
 
-    public boolean addReview(String comentario, int classificacao, IBDHandler ibdHandler) {
+    public boolean addReview(String IDpi,String comentario, int classificacao, IBDHandler ibdHandler) {
         if(this.sessaoAtual != null){
             SessaoUtilizador su = (SessaoUtilizador) sessaoAtual;
-            return su.addReview(classificacao,comentario,ibdHandler);
+            return su.addReview(classificacao,comentario,IDpi,ibdHandler);
 
         }
         return false;
@@ -263,31 +263,51 @@ public class Modelo /*implements IModelo*/{
 
     
     public void atualizaReports() {
-
+        if(this.sessaoAtual != null){
+            SessaoModerador sm = (SessaoModerador) sessaoAtual;
+            sm.atualizaReports();
+        }
     }
 
     
     public void bloquser(String userID, IBDHandler ibdHandler) {
-
+        if(this.sessaoAtual != null){
+            SessaoModerador sm = (SessaoModerador) sessaoAtual;
+            sm.bloqUser(userID,ibdHandler);
+        }
     }
 
     
     public void modRemoveReview(String review, IBDHandler ibdHandler) {
-
+        if(this.sessaoAtual != null){
+            SessaoModerador sm = (SessaoModerador) sessaoAtual;
+            sm.modRemoveReview(review,ibdHandler);
+        }
     }
 
     
     public void resetarReports(String reviewID, IBDHandler ibdHandler) {
-
+        if(this.sessaoAtual != null){
+            SessaoModerador sm = (SessaoModerador) sessaoAtual;
+            sm.resertarReports(reviewID,ibdHandler);
+        }
     }
 
     
-    public boolean addModerador(String email, String ssername, String password, IBDHandler ibdHandler) {
+    public boolean addModerador(String email, String username, String password, IBDHandler ibdHandler) {
+        if(this.sessaoAtual != null){
+            SessaoAdministrador sa = (SessaoAdministrador) sessaoAtual;
+            sa.addModerador(email, username, password, ibdHandler);
+            return true;
+        }
         return false;
     }
 
     
     public void removeModerador(String username, IBDHandler ibdHandler) {
-
+        if(this.sessaoAtual != null){
+            SessaoAdministrador sa = (SessaoAdministrador) sessaoAtual;
+            sa.removeModerador(username, ibdHandler);
+        }
     }
 }

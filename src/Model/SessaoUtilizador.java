@@ -1,92 +1,78 @@
 package Model;
 
+import DataLayer.BDHandler;
 import DataLayer.IBDHandler;
 
 import java.util.List;
 
 public class SessaoUtilizador extends Sessao{
-    public void refreshLocalizacao() {
 
+    public void refreshLocalizacao(APIHandler apiHandler) {
+        super.setLocalizacao(apiHandler.localizaUser());
     }
 
-    public List<PontoDeInteresse> localizaPisPorNome(String nome, Float raioDistancia, int classificacao, List<String> tags, IBDHandler ibdHandler) {
-
-        return null;
+    public List<PontoDeInteresse> localizaPisPorNome(String nome, Float raioDistancia, int classificacao, List<String> tags, IBDHandler ibdHandler, APIHandler apiHandler) {
+        return apiHandler.localizaPIsNome(nome,raioDistancia,tags);
     }
 
-    public List<PontoDeInteresse> localizaPisLocalizacao(String localizacao, Float raioDistancia, int classificacao, List<String> tags) {
-
-        return null;
+    public List<PontoDeInteresse> localizaPisLocalizacao(String localizacao, Float raioDistancia, int classificacao, List<String> tags, APIHandler apiHandler) {
+        return apiHandler.localizaPIsLocal(localizacao,raioDistancia,tags);
     }
 
     public void alteraGosto(String reviewID, IBDHandler ibdHandler) {
+        ibdHandler.alteraGosto(super.getIdUser(),reviewID);
     }
 
     public boolean verificaGosto(String reviewID,IBDHandler ibdHandler) {
-
+        ibdHandler.verificaGosto(reviewID,super.getIdUser());
         return false;
     }
 
     public void alteraReport(String reviewID,IBDHandler ibdHandler) {
+        ibdHandler.alteraReport(super.getIdUser(),reviewID);
     }
 
     public boolean verificaReport(String reviewID,IBDHandler ibdHandler) {
-        return false;
+        return ibdHandler.verificaReport(reviewID,super.getIdUser());
     }
 
-    public List<Utilizador> searchUser(String Username,IBDHandler ibdHandler) {
-        return null;
+    public List<Utilizador> searchUser(String username,IBDHandler ibdHandler) {
+        return ibdHandler.getUtilizadores(username);
     }
 
     public int alteraDados(String username, String email, String password,IBDHandler ibdHandler) {
-        return 0;
+        ibdHandler.atualizaUtilizador(super.getIdUser(),username,email,password);
+        return 1;
     }
 
     public void alteraReview(String reviewID, String comentario, int classificacao, IBDHandler ibdHandler) {
-
+        ibdHandler.alteraReview(comentario,classificacao,reviewID);
     }
 
     public boolean addReview(int classificacao, String comentario, String idPI, IBDHandler ibdHandler) {
-        return false;
+        return ibdHandler.addReview(comentario,classificacao+"",idPI,super.getIdUser());
 
     }
 
     public void alteraPiguardado(String idPI, IBDHandler ibdHandler) {
-    }
-
-    public boolean removePI(String idPI, IBDHandler ibdHandler) {
-        return false;
+        ibdHandler.alteraPontoInteresseGuardado(idPI,super.getIdUser());
     }
 
     public boolean removeReview(String reviewID, IBDHandler ibdHandler) {
-        return false;
+        return ibdHandler.removeReview(reviewID);
 
     }
 
     public void removeConta(IBDHandler ibdHandler) {
+        ibdHandler.removeUtilizador(super.getIdUser());
     }
 
     public boolean verificaPIguardado(String idPI, IBDHandler ibdHandler) {
-        return false;
+        return ibdHandler.verificaPontoInteresseGuardado(super.getIdUser(),idPI);
     }
 
     public boolean guardarPI(String idPI, IBDHandler ibdHandler) {
-        return false;
+        return ibdHandler.guardarPontoInteresse(super.getIdUser(),idPI);
     }
 
-    public String getIdUser(IBDHandler ibdHandler) {
-        return null;
-
-    }
-
-    public void setIdUser(String idUser,IBDHandler ibdHandler) {
-    }
-
-    public String getLocalizacao(IBDHandler ibdHandler) {
-        return null;
-
-    }
-
-    public void setLocalizacao(String localizacao) {
-    }
 }
