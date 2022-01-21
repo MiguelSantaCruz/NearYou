@@ -106,29 +106,54 @@ public class Modelo /*implements IModelo*/{
         return null;
     }
 
-    
+    /**
+     * Alterar um gosto numa review
+     */
     public void alteraGosto(String reviewID, IBDHandler ibdHandler) {
-
+        if(sessaoAtual != null){
+            String userId = sessaoAtual.getIdUser();
+            ibdHandler.alteraGosto(reviewID,userId);
+        }
     }
 
-    
+    /**
+     *
+     *Verifica um gosto numa review
+     *
+     */
     public boolean verificaGosto(String reviewID, IBDHandler ibdHandler) {
+        if(sessaoAtual != null){
+            return ibdHandler.verificaGosto(reviewID,sessaoAtual.getIdUser());
+
+        }
         return false;
     }
 
     
     public void alteraReport(String reviewID, IBDHandler ibdHandler) {
-
+        if(sessaoAtual != null){
+            //ibdHandler.alteraReport()
+            //TO DO
+        }
     }
 
-    
+    /**
+     * Verifica se uma determinada review foi reportada
+     */
     public boolean verificaReport(String reviewID, IBDHandler ibdHandler) {
+        if(this.sessaoAtual != null){
+            String userID = sessaoAtual.getIdUser();
+            return ibdHandler.verificaReport(reviewID,userID);
+        }
         return false;
     }
 
-    
-    public void searchUser(String searchinput, IBDHandler ibdHandler) {
-
+    /**
+     * Requisita à interface da base de dados utiliza-
+     * dores cujos dados se aproximem do input de procura
+     */
+    public List<Utilizador> searchUser(String searchinput, IBDHandler ibdHandler) {
+        return ibdHandler.getUtilizadores(searchinput);
     }
 
     
@@ -136,53 +161,103 @@ public class Modelo /*implements IModelo*/{
         return null;
     }
 
-    
+    /**
+     *
+     *
+     * @return 1 se correr tudo bem e -1 se falhar
+     */
     public int alteraDados(String username, String email, String password, IBDHandler ibdHandler) {
-        return 0;
+        if(this.sessaoAtual != null){
+            SessaoUtilizador su = (SessaoUtilizador) sessaoAtual;
+            su.alteraDados(username,email,password,ibdHandler);
+            return 1;
+        }
+        return -1;
     }
 
-    
+    /**
+     *
+     *  Recorre ao método ’alteraReview’ da classe Sessao, para alterar o comen-
+     *  tário e a classificação de uma review, caso esta pertença ao utilizador
+     *
+     */
     public void alteraReview(String reviewID, String comentario, int classificacao, IBDHandler ibdHandler) {
-
+        if(this.sessaoAtual != null){
+            SessaoUtilizador su = (SessaoUtilizador) sessaoAtual;
+            su.alteraReview(reviewID,comentario,classificacao,ibdHandler);
+        }
     }
 
     
     public void removeConta(String username, IBDHandler ibdHandler) {
+        if(this.sessaoAtual != null){
+            SessaoUtilizador su = (SessaoUtilizador) sessaoAtual;
+            su.removeConta(ibdHandler);
 
+        }
     }
 
     
     public boolean verificaPiguardado(String idPI, IBDHandler ibdHandler) {
+        if(this.sessaoAtual != null){
+            SessaoUtilizador su = (SessaoUtilizador) sessaoAtual;
+            return su.verificaPIguardado(idPI,ibdHandler);
+
+        }
         return false;
     }
 
     
     public boolean alteraPIguardado(String idPI, IBDHandler ibdHandler) {
+        if(this.sessaoAtual != null){
+            SessaoUtilizador su = (SessaoUtilizador) sessaoAtual;
+            su.alteraPiguardado(idPI,ibdHandler);
+            return true;
+
+        }
         return false;
     }
 
     
     public Utilizador getUtilizador(String userID, IBDHandler ibdHandler) {
-        return null;
+        return ibdHandler.getutilizador(userID);
+
     }
 
     
     public PontoDeInteresse getPI(String idPI, IBDHandler ibdHandler) {
-        return null;
+        return ibdHandler.getPontoInteresse(idPI);
     }
 
     
     public List<PontoDeInteresse> ordenaPIs(List<PontoDeInteresse> pis, int ordenacao, IBDHandler ibdHandler) {
+        if(ordenacao == 1){
+            // TO DO
+        }
+        else if(ordenacao == 2){
+            // TO DO
+        }
+        else return null;
         return null;
     }
 
-    
     public boolean addReview(String comentario, int classificacao, IBDHandler ibdHandler) {
+        if(this.sessaoAtual != null){
+            SessaoUtilizador su = (SessaoUtilizador) sessaoAtual;
+            return su.addReview(classificacao,comentario,ibdHandler);
+
+        }
         return false;
+
     }
 
     
     public boolean removeReview(String reviewID, IBDHandler ibdHandler) {
+        if(this.sessaoAtual != null){
+            SessaoUtilizador su = (SessaoUtilizador) sessaoAtual;
+            return su.removeReview(reviewID,ibdHandler);
+
+        }
         return false;
     }
 

@@ -19,70 +19,70 @@ public class SessaoUtilizador extends Sessao{
         return null;
     }
 
-    public void alteraGosto(String reviewID) {
+    public void alteraGosto(String reviewID, IBDHandler ibdHandler) {
     }
 
-    public boolean verificaGosto(String reviewID) {
+    public boolean verificaGosto(String reviewID,IBDHandler ibdHandler) {
 
         return false;
     }
 
-    public void alteraReport(String reviewID) {
+    public void alteraReport(String reviewID,IBDHandler ibdHandler) {
     }
 
-    public boolean verificaReport(String reviewID) {
+    public boolean verificaReport(String reviewID,IBDHandler ibdHandler) {
         return false;
     }
 
-    public List<Utilizador> searchUser(String Username) {
+    public List<Utilizador> searchUser(String Username,IBDHandler ibdHandler) {
         return null;
     }
 
-    public int alteraDados(String username, String email, String password) {
+    public int alteraDados(String username, String email, String password,IBDHandler ibdHandler) {
         return 0;
     }
 
-    public void alteraReview(String reviewID, String comentario, int classificacao) {
+    public void alteraReview(String reviewID, String comentario, int classificacao, IBDHandler ibdHandler) {
 
     }
 
-    public boolean addReview(int classificacao, String comentario, String idPI) {
+    public boolean addReview(int classificacao, String comentario, String idPI, IBDHandler ibdHandler) {
         return false;
 
     }
 
-    public void alteraPiguardado(String idPI) {
+    public void alteraPiguardado(String idPI, IBDHandler ibdHandler) {
     }
 
-    public boolean removePI(String idPI) {
+    public boolean removePI(String idPI, IBDHandler ibdHandler) {
         return false;
     }
 
-    public boolean removeReview(String reviewID) {
+    public boolean removeReview(String reviewID, IBDHandler ibdHandler) {
         return false;
 
     }
 
-    public void removeConta() {
+    public void removeConta(IBDHandler ibdHandler) {
     }
 
-    public boolean verificaPtguardado(String idPI) {
+    public boolean verificaPIguardado(String idPI, IBDHandler ibdHandler) {
         return false;
     }
 
-    public boolean guardarPI(String idPI) {
+    public boolean guardarPI(String idPI, IBDHandler ibdHandler) {
         return false;
     }
 
-    public String getIdUser() {
+    public String getIdUser(IBDHandler ibdHandler) {
         return null;
 
     }
 
-    public void setIdUser(String idUser) {
+    public void setIdUser(String idUser,IBDHandler ibdHandler) {
     }
 
-    public String getLocalizacao() {
+    public String getLocalizacao(IBDHandler ibdHandler) {
         return null;
 
     }
