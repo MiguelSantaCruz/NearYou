@@ -2,9 +2,10 @@ package Model;
 
 import DataLayer.IBDHandler;
 
+
 import java.util.List;
 
-public class Modelo /*implements IModelo*/{
+public class Modelo implements IModelo{
 
     private ISessao sessaoAtual;
 
@@ -15,6 +16,11 @@ public class Modelo /*implements IModelo*/{
     public int registarUser(String email, String username, String password, IBDHandler ibdHandler) {
         int userID = ibdHandler.addUtilizador(username,email,password,1);
         return userID;
+    }
+
+    @Override
+    public int nivelPermissao(String userID) {
+        return 0;
     }
 
     public int nivelPermissao(IBDHandler ibdHandler) {
@@ -55,6 +61,11 @@ public class Modelo /*implements IModelo*/{
             }
         }
         return sessaoCriada;
+    }
+
+    @Override
+    public boolean recuperacaoPassword(String email) {
+        return false;
     }
 
     /**
@@ -239,6 +250,11 @@ public class Modelo /*implements IModelo*/{
         }
         else return null;
         return null;
+    }
+
+    @Override
+    public boolean addReview(String comentario, int classificacao, IBDHandler ibdHandler) {
+        return false;
     }
 
     public boolean addReview(String IDpi,String comentario, int classificacao, IBDHandler ibdHandler) {

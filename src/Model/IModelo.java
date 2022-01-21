@@ -17,7 +17,7 @@ public interface IModelo {
     public boolean verificaGosto(String  reviewID,IBDHandler ibdHandler);
     public void alteraReport(String  reviewID,IBDHandler ibdHandler);
     public boolean verificaReport(String  reviewID,IBDHandler ibdHandler);
-    public void searchUser(String  searchinput,IBDHandler ibdHandler);
+    public List<Utilizador> searchUser(String  searchinput,IBDHandler ibdHandler);
     public List<Utilizador> urlDirecoes(String localizacaoUtilizador, PontoDeInteresse pi,IBDHandler ibdHandler);
     public int alteraDados(String  username, String  email, String  password,IBDHandler ibdHandler);
     public void alteraReview(String  reviewID, String comentario, int  classificacao,IBDHandler ibdHandler);

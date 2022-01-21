@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,26 +70,22 @@
 
 <h2>Login</h2>
 
-<form action="/action_page.php" method="post">
+<form action="loginAction" method="post">
     <div class="imgcontainer">
         <img src="nearyou_logo.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="container">
-        <label for="uname"><b>Nome de utilizador</b></label>
-        <input type="text" placeholder="Insira o nome de utilizador" name="uname" required>
+        <%--@declare id="uname"--%><label for="uname"><b>Email</b></label>
+        <input type="text" placeholder="Insira o email" name="uname" required>
 
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Insira Password" name="psw" required>
+        <input id="password" type="password" placeholder="Insira Password" name="psw" required>
 
         <button type="submit">Login</button>
-        <label>
-            <input type="checkbox" checked="checked" name="remember"> Lembrar me
-        </label>
     </div>
-
     <div class="container" style="background-color:#f1f1f1">
-            <input type="button" value="Voltar" onclick="history.back()">
+        <input type="button" value="Voltar" onclick="history.back()">
         <span class="psw">Esqueceu a <a href="#">password?</a></span>
     </div>
 </form>
