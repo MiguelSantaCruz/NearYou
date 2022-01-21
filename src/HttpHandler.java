@@ -52,7 +52,7 @@ public class HttpHandler implements Runnable {
                                 if (file.exists())
                                     sendResponse(200, filename, true, false, outputStream);
                                 else
-                                    sendResponse(404, "<html><p>Recurso não encontrado</p></html>", false, true, outputStream);
+                                    sendResponse(404, HtmlFiles + "error404.html", true, true, outputStream);
                                 break;
                         }
                         break;
@@ -67,7 +67,7 @@ public class HttpHandler implements Runnable {
                         if (file.exists())
                             sendResponse(200, filename, true, false, outputStream);
                         else
-                            sendResponse(404, "<html><p>Recurso não encontrado</p></html>", false, true, outputStream);
+                            sendResponse(404, HtmlFiles + "error404.html", true, true, outputStream);
                         break;
 
                 }
