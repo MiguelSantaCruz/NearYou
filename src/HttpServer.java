@@ -11,6 +11,7 @@ public class HttpServer implements Runnable{
         String serverString = "FFSync HTTP server";
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("[TCP] HTTP server listening on port " + port + " ...");
+            System.out.println("Pode aceder em http://localhost:" + port + "/");
             /* Aceitar pedidos e criar nova thread */
             while (true) {
                 Socket clientSocket = serverSocket.accept();

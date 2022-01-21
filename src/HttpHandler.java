@@ -49,10 +49,10 @@ public class HttpHandler implements Runnable {
                                 String filename = HtmlFiles + httpRequestedFile.substring(1);
                                 File file = new File(filename);
                                 System.out.println("File sent: " + filename);
-                                if (file.exists())
-                                    sendResponse(200, filename, true, false, outputStream);
-                                else
-                                    sendResponse(404, HtmlFiles + "error404.html", true, true, outputStream);
+                                checkFileAndSendResponse(outputStream, httpRequestedFile, filename, file);
+                                break;
+                            case "/check":
+                                
                                 break;
                         }
                         break;
@@ -64,10 +64,7 @@ public class HttpHandler implements Runnable {
                         String filename = HtmlFiles + httpRequestedFile.substring(1);
                         File file = new File(filename);
                         System.out.println("File sent: " + filename);
-                        if (file.exists())
-                            sendResponse(200, filename, true, false, outputStream);
-                        else
-                            sendResponse(404, HtmlFiles + "error404.html", true, true, outputStream);
+                        checkFileAndSendResponse(outputStream, httpRequestedFile, filename, file);
                         break;
 
                 }
@@ -77,16 +74,42 @@ public class HttpHandler implements Runnable {
         }     
     }
 
+    private void checkFileAndSendResponse(OutputStream outputStream, String httpRequestedFile, String filename, File file) throws IOException {
+        if (file.exists())
+            sendResponse(200, filename, true, false, outputStream);
+        else {
+            String htmlFilename = HtmlFiles + httpRequestedFile.substring(1) + ".html";
+            File htmlFile = new File(htmlFilename);
+            if (htmlFile.exists()) sendResponse(200, htmlFilename, true, true, outputStream);
+            else {
+                String jspFilename = HtmlFiles + httpRequestedFile.substring(1) + ".jsp";
+                File jspFile = new File(jspFilename);
+                if (jspFile.exists()) sendResponse(200, jspFilename, true, false, outputStream);
+                else {
+                    sendResponse(404, HtmlFiles + "error404.html", true, true, outputStream);
+                }
+            }
+        }
+    }
+
     /* Enviar a resposta para o browser */
     public void sendResponse(int code, String response, Boolean isFile,Boolean isHTML,OutputStream out) throws IOException{
         out.write(("HTTP/1.1 " + code +"\n").getBytes());
         out.write(("Server: " + this.serverString +"\n").getBytes());
         out.write(("Date: " + LocalDateTime.now() +"\n").getBytes());
         if(isFile){
-            if(isHTML) out.write(("Content-type: text/html; charset=utf-8\n").getBytes());
-            else out.write(("Content-type: multipart/form-data;\n").getBytes());
+            if(response.endsWith(".html")){
+                out.write(("Content-type: text/html; charset=utf-8\n").getBytes());
+            } else if(response.endsWith(".jsp")){
+                out.write(("Content-type: text/html; charset=utf-8\n").getBytes());
+            }  else if(response.endsWith(".png")){
+                out.write(("Content-type: image/png;\n").getBytes());
+            } else if(response.endsWith(".jpeg")){
+                out.write(("Content-type: image/jpeg;\n").getBytes());
+            } else if(response.endsWith(".gif")){
+                out.write(("Content-type: image/gif;\n").getBytes());
+            } else out.write(("Content-type: multipart/form-data;\n").getBytes());
             File file = new File(response);
-
             out.write(("Content-length: " + file.length() +"\n").getBytes());
             out.write(("\r\n").getBytes());
             FileInputStream fin = new FileInputStream(file);
