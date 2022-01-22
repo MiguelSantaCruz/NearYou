@@ -3,6 +3,11 @@ package Model;
 import DataLayer.IBDHandler;
 
 public class SessaoModerador extends Sessao {
+
+    public SessaoModerador(String idUser, String localizacao){
+        super(idUser,localizacao);
+    }
+
     public void atualizaReports(){
 
     }

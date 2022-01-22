@@ -7,6 +7,10 @@ import java.util.List;
 
 public class SessaoUtilizador extends Sessao{
 
+    public SessaoUtilizador(String idUser, String localizacao){
+        super(idUser,localizacao);
+    }
+
     public void refreshLocalizacao(APIHandler apiHandler) {
         super.setLocalizacao(apiHandler.localizaUser());
     }

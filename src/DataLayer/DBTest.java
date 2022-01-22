@@ -19,6 +19,7 @@ public class DBTest implements IBDHandler{
         this.addUtilizador("miguel","m@gmail.com","12345",1);
     }
 
+    @Override
     public int addUtilizador(String username, String email, String password, int permissao) {
         int userID = -1;
         int id = geraIdentificadorUnico(this.utilizadores);
@@ -28,10 +29,11 @@ public class DBTest implements IBDHandler{
         return userID;
     }
 
+    @Override
     public int nivelDePermissao(String userID) {
         int permissao = -1;
-        if(utilizadores.containsKey(Integer.valueOf(userID))){
-            permissao = utilizadores.get(Integer.valueOf(userID)).getPermissao();
+        if(utilizadores.containsKey(userID)){
+            permissao = utilizadores.get(userID).getPermissao();
         }
         return permissao;
     }
@@ -57,8 +59,8 @@ public class DBTest implements IBDHandler{
     @Override
     public String verificaLogin(String email, String password) {
         Utilizador user = getutilizadorByEmail(email);
-        if(user != null && user.getPassword().equals(password)) return "200";
-        else return "404";
+        if(user != null && user.getPassword().equals(password)) return String.valueOf(user.getUserID());
+        else return null;
     }
 
     @Override
@@ -214,8 +216,9 @@ public class DBTest implements IBDHandler{
     }
 
     @Override
-    public Utilizador getutilizador(String UserID) {
-        return null;
+    public Utilizador getUtilizador(String userID) {
+        System.out.println("userID get: " + userID);
+        return this.utilizadores.get(userID);
     }
 
     public Utilizador getutilizadorByEmail(String email) {

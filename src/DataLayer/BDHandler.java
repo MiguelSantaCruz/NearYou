@@ -149,7 +149,7 @@ public class BDHandler implements IBDHandler {
     }
 
     @Override
-    public Utilizador getutilizador(String UserID) {
+    public Utilizador getUtilizador(String UserID) {
         return null;
     }
 

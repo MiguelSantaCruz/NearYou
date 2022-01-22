@@ -27,5 +27,11 @@ public class RegisterAction extends HttpServlet {
         out.println("<p> My username: " + username+"</p>");
         out.println("<p> My password: " + password+"</p>");
         out.println("<p> My repeated password: " + repeatPassword+"</p>");
+        int userID = NearYouMain.ibdHandler.addUtilizador(username,email,password,1);
+        if(userID == -1) out.println("<p> Erro, tente de novo </p>");
+        out.write("<p><a href=\"login\">Log in</a>.</p>");
+        out.write("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+
+
     }
 }

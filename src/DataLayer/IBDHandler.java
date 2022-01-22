@@ -87,7 +87,7 @@ public interface IBDHandler {
 
     PontoDeInteresse getPontoInteresse(String idPontoInteresse);
 
-    Utilizador getutilizador(String UserID);
+    Utilizador getUtilizador(String UserID);
 
     int getClassificacaoReview(String ReviewID);
 }

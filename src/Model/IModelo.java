@@ -5,6 +5,8 @@ import DataLayer.IBDHandler;
 import java.util.List;
 
 public interface IModelo {
+    public ISessao getSessaoAtual();
+    public void setSessaoAtual(ISessao sessaoAtual);
     int registarUser(String email, String username, String password, IBDHandler ibdHandler);
     int nivelPermissao(String userID);
     int login(String email, String password,IBDHandler ibdHandler);

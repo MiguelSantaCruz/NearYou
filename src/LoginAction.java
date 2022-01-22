@@ -1,3 +1,5 @@
+import Model.Utilizador;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -17,16 +19,19 @@ public class LoginAction extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         String email = request.getParameter("uname");
-        out.println("<p>");
-        out.println("My email: "+email);
-        out.println("</p>");
         String password = request.getParameter("psw");
-        out.println("<p>");
-        out.println("My password: "+ password);
-        out.println("</p>");
-        if(NearYouMain.modelo.login(email,password,NearYouMain.ibdHandler) == -1) out.println("Login inválido");
-        else out.println("Sucesso");
-        out.println(NearYouMain.ibdHandler.toString());
+        int sessaoCriada = NearYouMain.modelo.login(email,password,NearYouMain.ibdHandler);
+
+        if(sessaoCriada == -1)
+            out.println("<h1>Login inválido</h1>");
+        else {
+            request.setAttribute("Sessao",NearYouMain.modelo.getSessaoAtual());
+            Utilizador utilizador = NearYouMain.modelo.getUtilizador(NearYouMain.modelo.getSessaoAtual().getIdUser(),NearYouMain.ibdHandler);
+            request.setAttribute("Utilizador",utilizador);
+            RequestDispatcher view = request.getRequestDispatcher("userAuthenticated.jsp");
+            view.forward(request, response);
+        }
+
 
 
     }

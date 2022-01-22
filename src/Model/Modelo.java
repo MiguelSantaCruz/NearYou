@@ -13,10 +13,20 @@ public class Modelo implements IModelo{
         this.sessaoAtual = null;
     }
 
+
+    public ISessao getSessaoAtual() {
+        return sessaoAtual;
+    }
+
+    public void setSessaoAtual(ISessao sessaoAtual) {
+        this.sessaoAtual = sessaoAtual;
+    }
+
     public int registarUser(String email, String username, String password, IBDHandler ibdHandler) {
         int userID = ibdHandler.addUtilizador(username,email,password,1);
         return userID;
     }
+
 
     @Override
     public int nivelPermissao(String userID) {
@@ -41,22 +51,27 @@ public class Modelo implements IModelo{
     public int login(String email, String password, IBDHandler ibdHandler) {
         int sessaoCriada = -1;
         String idUser = ibdHandler.verificaLogin(email, password);
+        System.out.println(idUser+"");
+        APIHandler api = new APIHandler();
         if (idUser != null && !ibdHandler.verificaBloqueado(idUser)) {
             int nivelPermissao = ibdHandler.nivelDePermissao(idUser);
+            System.out.println("nivelPermissao: " + nivelPermissao);
             switch (nivelPermissao) {
                 case 1:
-                    this.sessaoAtual = new SessaoUtilizador();
+                    this.sessaoAtual = new SessaoUtilizador(idUser,api.localizaUser());
                     sessaoCriada = 1;
                     break;
                 case 2:
-                    this.sessaoAtual = new SessaoModerador();
+                    this.sessaoAtual = new SessaoModerador(idUser,api.localizaUser());
                     sessaoCriada = 2;
                     break;
                 case 3:
-                    this.sessaoAtual = new SessaoAdministrador();
+                    this.sessaoAtual = new SessaoAdministrador(idUser,api.localizaUser());
                     sessaoCriada = 3;
                     break;
                 default:
+                    this.sessaoAtual = new SessaoUtilizador(idUser,api.localizaUser());
+                    sessaoCriada = 1;
                     break;
             }
         }
@@ -231,8 +246,7 @@ public class Modelo implements IModelo{
 
     
     public Utilizador getUtilizador(String userID, IBDHandler ibdHandler) {
-        return ibdHandler.getutilizador(userID);
-
+        return ibdHandler.getUtilizador(userID);
     }
 
     

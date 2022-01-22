@@ -5,7 +5,7 @@ import java.util.List;
 public class APIHandler {
     public String localizaUser(){
 
-        return null;
+        return "NaN";
     }
 
     public List<PontoDeInteresse> localizaPIsLocal(String localizacao, Float raioDistancia, List<String> tags){
