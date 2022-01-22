@@ -23,6 +23,7 @@ public class Utilizador {
         this.bloqueado = false;
         this.piGuardados = new ArrayList<>();
         this.reviews = new ArrayList<>();
+        this.reviewsGostadas = new ArrayList<>();
     }
 
     public Utilizador(int userID, String userName, String email, String password, int permissao) {
@@ -34,6 +35,7 @@ public class Utilizador {
         this.bloqueado = false;
         this.piGuardados = new ArrayList<>();
         this.reviews = new ArrayList<>();
+        this.reviewsGostadas = new ArrayList<>();
     }
 
     public String getPassword() {

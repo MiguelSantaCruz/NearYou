@@ -3,11 +3,9 @@ package Model;
 public class Sessao implements ISessao{
 
     private String idUser;
-    private String localizacao;
 
-    public Sessao(String idUser,String localizacao){
+    public Sessao(String idUser){
         this.idUser = idUser;
-        this.localizacao = localizacao;
     }
 
     public String getIdUser() {
@@ -18,11 +16,4 @@ public class Sessao implements ISessao{
         this.idUser = idUser;
     }
 
-    public String getLocalizacao() {
-        return localizacao;
-    }
-
-    public void setLocalizacao(String localizacao) {
-        this.localizacao = localizacao;
-    }
 }

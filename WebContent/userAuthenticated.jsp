@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Página inicial</title>
 </head>
 <body>
 <%
@@ -38,13 +38,27 @@
         bottom: 0;
         height: inherit;
     }
+    .poi {
+        float: left;
+        padding: 20px;
+        background: yellow;
+        border-style: solid
+    }
+
+    .imgPOI{
+        float: left;
+        padding: 20px;
+    }
 </style>
 <body style="background-color:orange;">
     <div class=" w3-container">
 
 <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-        <img src="nearyou_logo.png" alt="Avatar" class="avatar" width="100">
+        <a href="welcome">
+            <img src="nearyou_logo.png" alt="Avatar" class="avatar" width="100">
+        </a>
+
         <h1 class="w3-theme-black">NearYou</h1>
     </div>
     <div class="w3-third w3-container">
@@ -54,7 +68,7 @@
 </div>
 <div class="w3-row w3-padding-64">
 
-    <form action="loginAction" method="post">
+    <form action="search" method="post">
         <div class="container">
             <label for="search"><p>Procurar</p></label>
             <input id="search" type="text" placeholder="Insira o termo de procura" name="search" required>
@@ -66,9 +80,11 @@
     <div class="w3-twothird w3-container">
         <h1 class="w3-theme-black">Pontos de interesse próximos</h1>
     </div>
-    <div class="w3-twothird w3-container">
+
+    <div class="poi">
         <% for (Map.Entry<String, PontoDeInteresse> entry : ibdHandler.getPontosDeInteresse().entrySet()) {
-            out.print("<p class=\"w3-border w3-padding-large w3-padding-64 w3-center\"><img src=\"" + entry.getValue().getPathFoto() + "\" width=\"100\">     " + entry.getValue().getDescricao() + "\nClassificação:" + entry.getValue().getClassificacaoMedia() + "</p>"+ "</p>\n");
+             out.print(" <p><img class=\"imgPOI\" src=\"" + entry.getValue().getPathFoto()+"\"" + "alt=\"Photo\" style=\"width:170px;height:170px;\"></p><h1><a href=\"openPOI?" + entry.getValue().getIdPontoInteresse() + "\" >" + entry.getValue().getName() + "</a></h1><p>" +
+             entry.getValue().getEndereco()+ "</p><p>" + entry.getValue().getDescricao()+ "</p><p><b> Classificação</b>: " + entry.getValue().getClassificacaoMedia() + "</p>");
         }%>
     </div>
 </div>

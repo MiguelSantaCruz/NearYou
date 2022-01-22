@@ -52,25 +52,24 @@ public class Modelo implements IModelo{
         int sessaoCriada = -1;
         String idUser = ibdHandler.verificaLogin(email, password);
         System.out.println(idUser+"");
-        APIHandler api = new APIHandler();
         if (idUser != null && !ibdHandler.verificaBloqueado(idUser)) {
             int nivelPermissao = ibdHandler.nivelDePermissao(idUser);
             System.out.println("nivelPermissao: " + nivelPermissao);
             switch (nivelPermissao) {
                 case 1:
-                    this.sessaoAtual = new SessaoUtilizador(idUser,api.localizaUser());
+                    this.sessaoAtual = new SessaoUtilizador(idUser);
                     sessaoCriada = 1;
                     break;
                 case 2:
-                    this.sessaoAtual = new SessaoModerador(idUser,api.localizaUser());
+                    this.sessaoAtual = new SessaoModerador(idUser);
                     sessaoCriada = 2;
                     break;
                 case 3:
-                    this.sessaoAtual = new SessaoAdministrador(idUser,api.localizaUser());
+                    this.sessaoAtual = new SessaoAdministrador(idUser);
                     sessaoCriada = 3;
                     break;
                 default:
-                    this.sessaoAtual = new SessaoUtilizador(idUser,api.localizaUser());
+                    this.sessaoAtual = new SessaoUtilizador(idUser);
                     sessaoCriada = 1;
                     break;
             }
@@ -99,17 +98,6 @@ public class Modelo implements IModelo{
         return passwordEnviada;
     }
 
-    /**
-     * Devolve a localizacao do utilizador
-     *
-     */
-    public String getLocalizacao() {
-        String localizacao = "NaN";
-        if(this.sessaoAtual.getLocalizacao() != null){
-            localizacao = this.sessaoAtual.getLocalizacao();
-        }
-        return localizacao;
-    }
 
     /**
      * Fecha a sessão atual

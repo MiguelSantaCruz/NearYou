@@ -11,7 +11,6 @@ public interface IModelo {
     int nivelPermissao(String userID);
     int login(String email, String password,IBDHandler ibdHandler);
     boolean recuperacaoPassword(String email);
-    String getLocalizacao();
     void logOut();
     List<PontoDeInteresse> getPIsPorNome(String nome, Float raioDistancia, int classificacao, List<String> tags,IBDHandler ibdHandler);
     List<PontoDeInteresse> getPIsPorLocalizacao(String localizacao, Float raioDistancia, int classificacao, List<String> tags,IBDHandler ibdHandler);

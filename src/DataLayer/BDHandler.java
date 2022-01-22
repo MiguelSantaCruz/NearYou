@@ -55,6 +55,11 @@ public class BDHandler implements IBDHandler {
     }
 
     @Override
+    public boolean verificaAvaliou(String piID, String userID) {
+        return false;
+    }
+
+    @Override
     public boolean alteraReport(String UserID, String ReviewilD) {
         return false;
     }

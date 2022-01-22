@@ -7,21 +7,10 @@ import java.util.List;
 
 public class SessaoUtilizador extends Sessao{
 
-    public SessaoUtilizador(String idUser, String localizacao){
-        super(idUser,localizacao);
+    public SessaoUtilizador(String idUser){
+        super(idUser);
     }
 
-    public void refreshLocalizacao(APIHandler apiHandler) {
-        super.setLocalizacao(apiHandler.localizaUser());
-    }
-
-    public List<PontoDeInteresse> localizaPisPorNome(String nome, Float raioDistancia, int classificacao, List<String> tags, IBDHandler ibdHandler, APIHandler apiHandler) {
-        return apiHandler.localizaPIsNome(nome,raioDistancia,tags);
-    }
-
-    public List<PontoDeInteresse> localizaPisLocalizacao(String localizacao, Float raioDistancia, int classificacao, List<String> tags, APIHandler apiHandler) {
-        return apiHandler.localizaPIsLocal(localizacao,raioDistancia,tags);
-    }
 
     public void alteraGosto(String reviewID, IBDHandler ibdHandler) {
         ibdHandler.alteraGosto(super.getIdUser(),reviewID);

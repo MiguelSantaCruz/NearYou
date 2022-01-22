@@ -4,8 +4,8 @@ import DataLayer.IBDHandler;
 
 public class SessaoModerador extends Sessao {
 
-    public SessaoModerador(String idUser, String localizacao){
-        super(idUser,localizacao);
+    public SessaoModerador(String idUser){
+        super(idUser);
     }
 
     public void atualizaReports(){

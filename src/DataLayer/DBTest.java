@@ -2,10 +2,7 @@ package DataLayer;
 
 import Model.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class DBTest implements IBDHandler{
     Map<String, Utilizador> utilizadores;
@@ -17,11 +14,18 @@ public class DBTest implements IBDHandler{
         this.pois = new HashMap<>();
         this.reviews = new HashMap<>();
         this.addUtilizador("miguel","m@gmail.com","12345678",1);
-        PontoDeInteresse poi = new PontoDeInteresse("1","Bom jesus",
-                "Santuário católico dedicado ao Senhor Bom Jesus","https://tastebraga.com/wp-content/uploads/2017/11/sugest%C3%B5es-6-2.png","Braga",3.5f);
-        PontoDeInteresse poi2 = new PontoDeInteresse("2","Theatro Circo","O Theatro Circo é um teatro que se localiza na Avenida da Liberdade n.º 697, na freguesia de São Lázaro, cidade e município de Braga, do distrito homónimo, em Portugal.","https://www.cm-braga.pt/archive/cache/img/sz800x600/CMB16012014SERGIOFREITAS0000034.JPG"," Avenida da Liberdade n.º 697",4.5f);
-        this.pois.put("1",poi);
-        this.pois.put("2",poi2);
+        //PontoDeInteresse poi = new PontoDeInteresse("1","Bom Jesus",
+                //"O Santuário do Bom Jesus do Monte, também referido como Santuário do Bom Jesus de Braga, localiza-se na freguesia de Tenões, na cidade, concelho e distrito de Braga, em Portugal. Fica situado nas proximidades do Santuário de Nossa Senhora do Sameiro.\n" +
+                  //      "\n" +
+                    //    "Este santuário católico dedicado ao Senhor Bom Jesus constitui-se num conjunto arquitetónico-paisagístico integrado por uma igreja, um escadório onde se desenvolve a Via Sacra do Bom Jesus, uma área de mata (Parque do Bom Jesus), alguns hotéis e um funicular (Elevador do Bom Jesus).","https://tastebraga.com/wp-content/uploads/2017/11/sugest%C3%B5es-6-2.png","Braga",3.5f);
+        //PontoDeInteresse poi2 = new PontoDeInteresse("2","Theatro Circo","O Theatro Circo é um teatro que se localiza na Avenida da Liberdade n.º 697, na freguesia de São Lázaro, cidade e município de Braga, do distrito homónimo, em Portugal.","https://www.cm-braga.pt/archive/cache/img/sz800x600/CMB16012014SERGIOFREITAS0000034.JPG"," Avenida da Liberdade n.º 697",4.5f);
+        //this.pois.put("1",poi);
+        //this.pois.put("2",poi2);
+        APIHandler apiHandler = new APIHandler();
+        List<PontoDeInteresse> pontoDeInteresseList = apiHandler.getPontosDeInteresse("café");
+        for (PontoDeInteresse pontoInteresse : pontoDeInteresseList) {
+            this.pois.put(pontoInteresse.getIdPontoInteresse(),pontoInteresse);
+        }
     }
 
     public Map<String,PontoDeInteresse> getPontosDeInteresse(){
@@ -129,6 +133,17 @@ public class DBTest implements IBDHandler{
     }
 
     @Override
+    public boolean verificaAvaliou(String piID, String userID) {
+        boolean jaAvaliou = false;
+        for (Map.Entry<String,Review> entry: this.reviews.entrySet()) {
+            if(entry.getValue().getPiID().equals(piID) && entry.getValue().getUserID().equals(userID)){
+                jaAvaliou = true;
+            }
+        }
+        return jaAvaliou;
+    }
+
+    @Override
     public boolean alteraReport(String UserID, String ReviewID) {
 
         return false;
@@ -156,7 +171,10 @@ public class DBTest implements IBDHandler{
 
     @Override
     public boolean addReview(String comentario, String classificacao, String idPontoInteresse, String userID) {
-        return false;
+        Review review = new Review(String.valueOf(geraIdentificadorUnico(this.reviews)),userID,idPontoInteresse,comentario,Float.valueOf(classificacao),0);
+        this.reviews.put(review.getReviewID(),review);
+        System.out.println("Adicionada review á base de dados: " + this.reviews.toString());
+        return true;
     }
 
     @Override
@@ -196,7 +214,13 @@ public class DBTest implements IBDHandler{
 
     @Override
     public List<Review> getPontoInteresseReviews(String idPontoInteresse) {
-        return null;
+        List<Review> reviewList = new ArrayList<>();
+        for (Map.Entry<String,Review> entry: this.reviews.entrySet()){
+            if(entry.getValue().getPiID().equals(idPontoInteresse)){
+                reviewList.add(entry.getValue());
+            }
+        }
+        return reviewList;
     }
 
     @Override
@@ -221,7 +245,7 @@ public class DBTest implements IBDHandler{
 
     @Override
     public PontoDeInteresse getPontoInteresse(String idPontoInteresse) {
-        return null;
+        return this.pois.get(idPontoInteresse);
     }
 
     @Override
