@@ -1,19 +1,70 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Utilizador {
-    private String userID;
+    private int userID;
     private String userName;
     private String email;
-    private List<String> PIGuardados;
-    private List<String> Reviews;
+    private String password;
+    private int permissao;
+    private boolean bloqueado;
+    private List<String> piGuardados;
+    private List<String> reviews;
+    private List<String> reviewsGostadas;
 
-    public String getUserID() {
+    public Utilizador(){
+        this.userID = -1;
+        this.userName = "NaN";
+        this.email = "NaN";
+        this.password = "NaN";
+        this.permissao = 1;
+        this.bloqueado = false;
+        this.piGuardados = new ArrayList<>();
+        this.reviews = new ArrayList<>();
+    }
+
+    public Utilizador(int userID, String userName, String email, String password, int permissao) {
+        this.userID = userID;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.permissao = permissao;
+        this.bloqueado = false;
+        this.piGuardados = new ArrayList<>();
+        this.reviews = new ArrayList<>();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getPermissao() {
+        return permissao;
+    }
+
+    public void setPermissao(int permissao) {
+        this.permissao = permissao;
+    }
+
+    public boolean isBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(boolean bloqueado) {
+        this.bloqueado = bloqueado;
+    }
+
+    public int getUserID() {
         return userID;
     }
 
-    public void setUserID(String userID) {
+    public void setUserID(int userID) {
         this.userID = userID;
     }
 
@@ -33,19 +84,50 @@ public class Utilizador {
         this.email = email;
     }
 
-    public List<String> getPIGuardados() {
-        return PIGuardados;
+    public List<String> getpiGuardados() {
+        return piGuardados;
     }
 
-    public void setPIGuardados(List<String> PIGuardados) {
-        this.PIGuardados = PIGuardados;
+    public void setpiGuardados(List<String> PIGuardados) {
+        this.piGuardados = PIGuardados;
     }
 
     public List<String> getReviews() {
-        return Reviews;
+        return reviews;
     }
 
     public void setReviews(List<String> reviews) {
-        Reviews = reviews;
+        reviews = reviews;
+    }
+
+    public List<String> getReviewsGostadas() {
+        return reviewsGostadas;
+    }
+
+    public void setReviewsGostadas(List<String> reviewsGostadas) {
+        this.reviewsGostadas = reviewsGostadas;
+    }
+
+    public void addReviewGostada(String reviewID){
+        this.reviewsGostadas.add(reviewID);
+    }
+
+    public void removeReviewGostada(String reviewID){
+        this.reviewsGostadas.remove(reviewID);
+    }
+
+    @Override
+    public String toString() {
+        return "Utilizador{" +
+                "userID=" + userID +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", permissao=" + permissao +
+                ", bloqueado=" + bloqueado +
+                ", piGuardados=" + piGuardados +
+                ", reviews=" + reviews +
+                ", reviewsGostadas=" + reviewsGostadas +
+                '}';
     }
 }

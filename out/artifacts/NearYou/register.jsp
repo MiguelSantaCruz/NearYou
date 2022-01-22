@@ -56,7 +56,7 @@ hr {
 }
 
 /* Add a blue text color to links */
-a {
+{
     color: dodgerblue;
 }
 

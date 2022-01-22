@@ -1,4 +1,5 @@
 import DataLayer.BDHandler;
+import DataLayer.DBTest;
 import DataLayer.IBDHandler;
 import Model.IModelo;
 import Model.Modelo;
@@ -16,7 +17,7 @@ import java.io.IOException;
 public class NearYouMain extends HttpServlet {
 
     public static IModelo modelo = (IModelo) new Modelo();
-    public static IBDHandler ibdHandler = ibdHandler = (IBDHandler) new BDHandler();
+    public static IBDHandler ibdHandler = ibdHandler = (IBDHandler) new DBTest();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

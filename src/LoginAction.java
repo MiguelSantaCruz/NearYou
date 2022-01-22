@@ -18,7 +18,7 @@ public class LoginAction extends HttpServlet {
         PrintWriter out = response.getWriter();
         String email = request.getParameter("uname");
         out.println("<p>");
-        out.println("My name: "+email);
+        out.println("My email: "+email);
         out.println("</p>");
         String password = request.getParameter("psw");
         out.println("<p>");
@@ -26,6 +26,7 @@ public class LoginAction extends HttpServlet {
         out.println("</p>");
         if(NearYouMain.modelo.login(email,password,NearYouMain.ibdHandler) == -1) out.println("Login inválido");
         else out.println("Sucesso");
+        out.println(NearYouMain.ibdHandler.toString());
 
 
     }

@@ -49,7 +49,7 @@ public interface IBDHandler {
 
     boolean verificaGosto(String reviewID, String userID);
 
-    boolean alteraReport(String UserID, String ReviewilD);
+    boolean alteraReport(String UserID, String ReviewID);
 
     boolean verificaReport(String ReviewID, String UserID);
 
