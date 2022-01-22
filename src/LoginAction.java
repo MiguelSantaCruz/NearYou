@@ -14,15 +14,19 @@ public class LoginAction extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("Benja é lindo  ");
         String email = request.getParameter("uname");
-        out.println("My name "+email);
+        out.println("<p>");
+        out.println("My name: "+email);
+        out.println("</p>");
         String password = request.getParameter("psw");
-        out.println("My password "+ password);
-        if(NearYouMain.modelo.login(email,password,NearYouMain.ibdHandler) == 1) out.println("Login teste 1 ");
-        else out.println("Login errado ");
+        out.println("<p>");
+        out.println("My password: "+ password);
+        out.println("</p>");
+        if(NearYouMain.modelo.login(email,password,NearYouMain.ibdHandler) == -1) out.println("Login inválido");
+        else out.println("Sucesso");
+
+
     }
 }

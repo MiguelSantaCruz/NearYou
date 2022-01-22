@@ -86,7 +86,7 @@
     </div>
     <div class="container" style="background-color:#f1f1f1">
         <input type="button" value="Voltar" onclick="history.back()">
-        <span class="psw">Esqueceu a <a href="#">password?</a></span>
+        <span class="psw">Esqueceu a <a href="forgotPassword">password?</a></span>
     </div>
 </form>
 
