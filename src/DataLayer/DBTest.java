@@ -16,7 +16,16 @@ public class DBTest implements IBDHandler{
         this.utilizadores = new HashMap<>();
         this.pois = new HashMap<>();
         this.reviews = new HashMap<>();
-        this.addUtilizador("miguel","m@gmail.com","12345",1);
+        this.addUtilizador("miguel","m@gmail.com","12345678",1);
+        PontoDeInteresse poi = new PontoDeInteresse("1","Bom jesus",
+                "Santuário católico dedicado ao Senhor Bom Jesus","https://tastebraga.com/wp-content/uploads/2017/11/sugest%C3%B5es-6-2.png","Braga",3.5f);
+        PontoDeInteresse poi2 = new PontoDeInteresse("2","Theatro Circo","O Theatro Circo é um teatro que se localiza na Avenida da Liberdade n.º 697, na freguesia de São Lázaro, cidade e município de Braga, do distrito homónimo, em Portugal.","https://www.cm-braga.pt/archive/cache/img/sz800x600/CMB16012014SERGIOFREITAS0000034.JPG"," Avenida da Liberdade n.º 697",4.5f);
+        this.pois.put("1",poi);
+        this.pois.put("2",poi2);
+    }
+
+    public Map<String,PontoDeInteresse> getPontosDeInteresse(){
+        return this.pois;
     }
 
     @Override

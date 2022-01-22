@@ -12,6 +12,26 @@ public class PontoDeInteresse {
     List<String> reviews;
     Float classificacaoMedia;
 
+    public PontoDeInteresse(String idPontoInteresse, String name, String descricao, List<String> tags, String pathFoto, String endereco, List<String> reviews, Float classificacaoMedia) {
+        this.idPontoInteresse = idPontoInteresse;
+        this.name = name;
+        this.descricao = descricao;
+        this.tags = tags;
+        this.pathFoto = pathFoto;
+        this.endereco = endereco;
+        this.reviews = reviews;
+        this.classificacaoMedia = classificacaoMedia;
+    }
+
+    public PontoDeInteresse(String idPontoInteresse, String name, String descricao, String pathFoto, String endereco, Float classificacaoMedia) {
+        this.idPontoInteresse = idPontoInteresse;
+        this.name = name;
+        this.descricao = descricao;
+        this.pathFoto = pathFoto;
+        this.endereco = endereco;
+        this.classificacaoMedia = classificacaoMedia;
+    }
+
     public String getIdPontoInteresse() {
         return idPontoInteresse;
     }
@@ -74,6 +94,20 @@ public class PontoDeInteresse {
 
     public void setClassificacaoMedia(Float classificacaoMedia) {
         this.classificacaoMedia = classificacaoMedia;
+    }
+
+    @Override
+    public String toString() {
+        return "PontoDeInteresse{" +
+                "idPontoInteresse='" + idPontoInteresse + '\'' +
+                ", name='" + name + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", tags=" + tags +
+                ", pathFoto='" + pathFoto + '\'' +
+                ", endereco='" + endereco + '\'' +
+                ", reviews=" + reviews +
+                ", classificacaoMedia=" + classificacaoMedia +
+                '}';
     }
 
     /*

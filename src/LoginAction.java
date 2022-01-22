@@ -22,12 +22,14 @@ public class LoginAction extends HttpServlet {
         String password = request.getParameter("psw");
         int sessaoCriada = NearYouMain.modelo.login(email,password,NearYouMain.ibdHandler);
 
-        if(sessaoCriada == -1)
+        if(sessaoCriada == -1) {
             out.println("<h1>Login inválido</h1>");
-        else {
+            out.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+        } else {
             request.setAttribute("Sessao",NearYouMain.modelo.getSessaoAtual());
             Utilizador utilizador = NearYouMain.modelo.getUtilizador(NearYouMain.modelo.getSessaoAtual().getIdUser(),NearYouMain.ibdHandler);
             request.setAttribute("Utilizador",utilizador);
+            request.setAttribute("BD",NearYouMain.ibdHandler);
             RequestDispatcher view = request.getRequestDispatcher("userAuthenticated.jsp");
             view.forward(request, response);
         }

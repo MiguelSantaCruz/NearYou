@@ -6,6 +6,7 @@ import Model.Review;
 import Model.Utilizador;
 
 import java.util.List;
+import java.util.Map;
 
 public class BDHandler implements IBDHandler {
     @Override
@@ -156,5 +157,10 @@ public class BDHandler implements IBDHandler {
     @Override
     public int getClassificacaoReview(String ReviewID) {
         return 0;
+    }
+
+    @Override
+    public Map<String, PontoDeInteresse> getPontosDeInteresse() {
+        return null;
     }
 }

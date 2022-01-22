@@ -80,14 +80,17 @@
         <input type="text" placeholder="Insira o email" name="uname" required>
 
         <label for="psw"><b>Password</b></label>
-        <input id="password" type="password" placeholder="Insira Password" name="psw" required>
+        <input id="password" type="password"  minlength="8" placeholder="Insira Password" name="psw" required>
 
         <button type="submit">Login</button>
     </div>
     <div class="container" style="background-color:#f1f1f1">
-        <input type="button" value="Voltar" onclick="history.back()">
+
         <span class="psw">Esqueceu a <a href="forgotPassword">password?</a></span>
     </div>
+</form>
+<form action="welcome" method="get">
+    <button type="submit" class="ui-button">Página inicial</button>
 </form>
 
 </body>

@@ -66,11 +66,15 @@ hr {
     text-align: center;
 }</style>
 <body>
+
+
 <form action="registerAction" method="post">
     <div class="container">
         <h1>Registar</h1>
         <p>Preencha o formulário para criar uma conta</p>
         <hr>
+
+
 
         <label for="email"><b>Email</b></label>
         <input type="text" placeholder="Insira o email" name="email" id="email" required>
@@ -78,11 +82,12 @@ hr {
         <label for="username"><b>Nome de Utilizador</b></label>
         <input type="text" placeholder="Insira nome de utilizador" name="username" id="username" required>
 
+
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Insira a Password" name="psw" id="psw" required>
+        <input type="password" placeholder="Insira a Password" minlength="8" name="psw" id="psw" required>
 
         <label for="psw-repeat"><b>Repita Password</b></label>
-        <input type="password" placeholder="Insira a Password" name="psw-repeat" id="psw-repeat" required>
+        <input type="password" placeholder="Insira a Password" minlength="8" name="psw-repeat" id="psw-repeat" required>
         <hr>
         <button type="submit" class="registerbtn">Registar</button>
     </div>

@@ -2,6 +2,7 @@ package DataLayer;
 import Model.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IBDHandler {
 
@@ -90,4 +91,6 @@ public interface IBDHandler {
     Utilizador getUtilizador(String UserID);
 
     int getClassificacaoReview(String ReviewID);
+
+    public Map<String,PontoDeInteresse> getPontosDeInteresse();
 }
