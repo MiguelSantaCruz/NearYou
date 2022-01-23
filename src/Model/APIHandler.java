@@ -3,7 +3,11 @@ package Model;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,15 +15,23 @@ import java.util.List;
 import java.util.Scanner;
 
 public class APIHandler {
+    String MAXHEIGHT = "170";
+    String MAXWIDTH = "170";
     String APIKEY = "AIzaSyB2KiMnJmJBQMW4KjlW_23xCDbu4nPg3kE";
 
     public APIHandler() {
     }
 
+    public String getPhoto(String referencia) {
+            String urlFoto;
+            String urlString = "https://maps.googleapis.com/maps/api/place/photo?photoreference=" + referencia + "&sensor=false&maxheight=" + MAXHEIGHT + "&maxwidth=" + MAXWIDTH + "&key=" + APIKEY;
+            return  urlString;
+    }
+
     public List<PontoDeInteresse> getPontosDeInteresse(String input) {
         try {
 
-            URL url = new URL("https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + input+"&key=" + APIKEY);
+            URL url = new URL("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ input + "&key=" + APIKEY);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -62,10 +74,13 @@ public class APIHandler {
                     String referenciaFoto;
                     if(fotos != null) {
                         JSONObject fotosRef = (JSONObject) fotos.get(0);
-                        referenciaFoto = (String) fotosRef.get(0);
+                        referenciaFoto = (String) fotosRef.get("photo_reference");
+                        System.out.println("Referencia antes da funcao: " + referenciaFoto);
+                        referenciaFoto = getPhoto(referenciaFoto);
                     } else {
                         referenciaFoto = null;
                     }
+                    System.out.println("Referencia foto:" + referenciaFoto);
                     String placeID = (String) resultsdata.get("place_id");
                     String rating = String.valueOf(resultsdata.get("rating"));
                     JSONArray types = (JSONArray) resultsdata.get("types");
@@ -83,5 +98,50 @@ public class APIHandler {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String getPublicIP() throws IOException {
+        URL whatismyip = new URL("http://checkip.amazonaws.com");
+        BufferedReader in = new BufferedReader(new InputStreamReader(
+                whatismyip.openStream()));
+
+        String ip = in.readLine(); //you get the IP as a String
+        System.out.println(ip);
+        return ip;
+    }
+
+    public void localizautilizador() {
+        try {
+            URL url = new URL("http://ip-api.com/json/" + getPublicIP());
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+            int connectionOk = conn.getResponseCode();
+
+            if (connectionOk != 200) {
+                throw new RuntimeException("httpResponseCode" + connectionOk);
+            } else {
+                StringBuilder informationString = new StringBuilder();
+                Scanner scanner = new Scanner(url.openStream());
+
+                while (scanner.hasNext()) {
+                    informationString.append(scanner.nextLine());
+                }
+                scanner.close();
+
+                System.out.println("Informação" + informationString);
+
+                JSONParser parser = new JSONParser();
+                Object obj = parser.parse(String.valueOf(informationString));
+                JSONObject jsonObject = (JSONObject) obj;
+                String city = (String) jsonObject.get("city");
+                String country = (String) jsonObject.get("country");
+                System.out.println("Cidade: " + city);
+                System.out.println("Pais: " + country);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

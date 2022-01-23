@@ -87,11 +87,13 @@
             PontoDeInteresse pontoDeInteresse = (PontoDeInteresse) request.getAttribute("poi");
 
              if(pontoDeInteresse.getPathFoto() == null){
-                 out.print("<p>Missing photo</p>");
+                 out.print(" <p><img class=\"imgPOI\" src=\"nophoto.png\"");
+                 out.print("alt=\"Photo\" style=\"width:170px;height:170px;\"></p><h1><a href=\"openPOI?");
+                 out.print(pontoDeInteresse.getIdPontoInteresse() + "\" >");
              }else{
                  out.print(" <p><img class=\"imgPOI\" src=\"");
                  out.print(pontoDeInteresse.getPathFoto() + "\"");
-                 out.print("alt=\"Foto\" style=\"width:170px;height:170px;\"></p><h1><a href=\"openPOI?");
+                 out.print("alt=\"Photo\" style=\"width:170px;height:170px;\"></p><h1><a href=\"openPOI?");
                  out.print(pontoDeInteresse.getIdPontoInteresse() + "\" >");
              }
 

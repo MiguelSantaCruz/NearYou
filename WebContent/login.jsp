@@ -90,7 +90,7 @@
         <span class="psw">Esqueceu a <a href="forgotPassword">password?</a></span>
     </div>
 </form>
-<form action="welcome" method="get">
+<form action="welcome.html" method="get">
     <button type="submit" class="ui-button">Página inicial</button>
 </form>
 

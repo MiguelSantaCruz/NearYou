@@ -22,7 +22,8 @@ public class DBTest implements IBDHandler{
         //this.pois.put("1",poi);
         //this.pois.put("2",poi2);
         APIHandler apiHandler = new APIHandler();
-        List<PontoDeInteresse> pontoDeInteresseList = apiHandler.getPontosDeInteresse("café");
+        apiHandler.localizautilizador();
+        List<PontoDeInteresse> pontoDeInteresseList = apiHandler.getPontosDeInteresse("sexshop");
         for (PontoDeInteresse pontoInteresse : pontoDeInteresseList) {
             this.pois.put(pontoInteresse.getIdPontoInteresse(),pontoInteresse);
         }

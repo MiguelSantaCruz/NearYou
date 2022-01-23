@@ -81,12 +81,24 @@
         <h1 class="w3-theme-black">Pontos de interesse próximos</h1>
     </div>
 
-    <div class="poi">
+
         <% for (Map.Entry<String, PontoDeInteresse> entry : ibdHandler.getPontosDeInteresse().entrySet()) {
-             out.print(" <p><img class=\"imgPOI\" src=\"" + entry.getValue().getPathFoto()+"\"" + "alt=\"Pineapple\" style=\"width:170px;height:170px;\"></p><h1><a href=\"openPOI?" + entry.getValue().getIdPontoInteresse() + "\" >" + entry.getValue().getName() + "</a></h1><p>" +
+            out.print("<div class=\"poi\" style=\"width: 100%\">");
+            if(entry.getValue().getPathFoto() == null){
+                out.print(" <p><img class=\"imgPOI\" src=\"nophoto.png\"");
+                out.print("alt=\"Photo\" style=\"width:170px;height:170px;\"></p><h1><a href=\"openPOI?");
+                out.print(entry.getValue().getIdPontoInteresse() + "\" >");
+            }else{
+                out.print(" <p><img class=\"imgPOI\" src=\"");
+                out.print(entry.getValue().getPathFoto() + "\"");
+                out.print("alt=\"Photo\" style=\"width:170px;height:170px;\"></p><h1><a href=\"openPOI?");
+                out.print(entry.getValue().getIdPontoInteresse() + "\" >");
+            }
+             out.write("</h1><h1>" + entry.getValue().getName() + "</a></h1><p>" +
              entry.getValue().getEndereco()+ "</p><p>" + entry.getValue().getDescricao()+ "</p><p><b> Classificação</b>: " + entry.getValue().getClassificacaoMedia() + "</p>");
+            out.print("</div>");
         }%>
-    </div>
+
 </div>
     </div>
 </body>
