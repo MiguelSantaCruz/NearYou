@@ -15,6 +15,9 @@ public class LoginAction extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         if(NearYouMain.modelo.getSessaoAtual() != null){
+            String ordenacao = request.getQueryString();
+            System.out.println("Ordenação: " + ordenacao);
+            request.setAttribute("ordenacao",ordenacao);
             request.setAttribute("Sessao",NearYouMain.modelo.getSessaoAtual());
             Utilizador utilizador = NearYouMain.modelo.getUtilizador(NearYouMain.modelo.getSessaoAtual().getIdUser(),NearYouMain.ibdHandler);
             request.setAttribute("Utilizador",utilizador);
@@ -39,6 +42,7 @@ public class LoginAction extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
+
         PrintWriter out = response.getWriter();
         String email = request.getParameter("uname");
         String password = request.getParameter("psw");

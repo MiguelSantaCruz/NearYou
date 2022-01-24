@@ -32,15 +32,16 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <body style="background-color:orange;">
+<input type="hidden" name="viewid" value="poi.jsp">
 <div class=" w3-container" style="background-color: darkorange">
-<div class="topnav" style="background-color: darkorange">
+    <div class="topnav" style="background-color: darkorange">
     <a class="active" href="loginAction" style="background-color: darkorange">
             <img src="nearyou_logo.png" alt="NearYou" width="100 height= 100">
 
             <p style="color: black;background-color: darkorange;font-size: 24px">Near You</p>
         </a>
         <h2 style="color: black;float:right">
-            <a style="color: black;float: inside;font-size: 30px" href="loginAction">
+            <a style="color: black;float: inside;font-size: 30px" href="profile?<% out.print(utilizador.getUserID()); %>">
                 Olá
                 <% out.print(utilizador.getUserName()); %>!</a>
             <img src="user-circle.png" alt="Avatar" class="avatar" width="100">
@@ -85,6 +86,9 @@
 
                     out.print("<p><b> Classificação</b>: " + pontoDeInteresse.getClassificacaoMedia() + "</p>");
                 }
+                out.print("<form action=\"save?"+ pontoDeInteresse.getIdPontoInteresse() + "?" + utilizador.getUserID() + "?\" method=\"post\" style=\"float: left\">\n" +
+                        "<button type=\"summit\">Guardar</button>\n" +
+                        " </form>");
             }
 
 
@@ -105,7 +109,7 @@
                 for (Review review: reviewList) {
                     out.print("<div class=\"poi\" style=\"width:100%\" href=\"#\">");
                     System.out.println("Review: " + review );
-                    out.print("<h1><b>" + ibdHandler.getUtilizador(Integer.valueOf(review.getUserID())).getUserName() + "</b></h1>");
+                    out.print("<h1><b><a href=\"profile?" + review.getUserID() + "\">" + ibdHandler.getUtilizador(Integer.valueOf(review.getUserID())).getUserName() + "</a></b></h1>");
                     out.print("<p>" + review.getReviewEscrita() + "</p>");
                     out.print("<b>Gostos: </b>");
                     out.print(LikedReviewDAO.getLikesNumber(Integer.valueOf(review.getReviewID())));
@@ -121,13 +125,26 @@
                             "                    <button type=\"summit\">Gostar</button>\n" +
                             "                </div>\n" +
                             "            </form>");
+                    if(Integer.valueOf(review.getUserID()) == utilizador.getUserID() || utilizador.getPermissao() != 1){
+                        out.print("<form style=\"float: right\" action=\"deleteReview?" + review.getReviewID()+"?" + pontoDeInteresse.getIdPontoInteresse() + "?\" method=\"post\">\n" +
+                                "                <div class=\"container\">\n" +
+                                "                    <button type=\"summit\">Apagar</button>\n" +
+                                "                </div>\n" +
+                                "            </form>");
+                    }
+                    out.print("<form style=\"float: right\" action=\"report?" + review.getReviewID()+"?" + review.getUserID() + "\" method=\"post\">\n" +
+                            "                <div class=\"container\">\n" +
+                            "                    <button type=\"summit\">Reportar</button>\n" +
+                            "                </div>\n" +
+                            "            </form>");
                     out.print("</div>");
+
                 }
             } else{
                 out.print("<p><h><b>Sem reviews</b></h></p>");
             }
         %>
-    </div>
+</div>
 </div>
     </div>
 </body>

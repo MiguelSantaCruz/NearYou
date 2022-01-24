@@ -1,6 +1,7 @@
 package DataBase;
 
 import Model.ReportedReview;
+import Model.Review;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class ReportedReviewDAO {
     private static final String FIND_ALL = "SELECT * FROM ReportedReview";
     private static final String REP_NUMBER = "SELECT count(*) FROM ReportedReview WHERE review_id=?";
     private static final String FIND_BY_ID = "SELECT * FROM ReportedReview WHERE id=?";
-    private static final String FIND_BY_USER_REV= "SELECT * FROM ReportedReview WHERE utilizador_id=?, review_id=?";
+    private static final String FIND_BY_USER_REV= "SELECT * FROM ReportedReview WHERE utilizador_id=? and review_id=?";
     private static final String INSERT = "INSERT INTO ReportedReview(utilizador_id,review_id) VALUES(?, ?)";
 
 
@@ -22,7 +23,7 @@ public class ReportedReviewDAO {
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
              PreparedStatement stm = conn.prepareStatement(REP_NUMBER)){
              stm.setInt(1,id);
-             try(ResultSet rs = stm.executeQuery(REP_NUMBER)) {
+             try(ResultSet rs = stm.executeQuery()) {
                  if (rs.next()) {
                      i = rs.getInt(1);
                  }
@@ -148,12 +149,18 @@ public class ReportedReviewDAO {
             while(rs.next()) {
                 int rev_id = rs.getInt("review_id");
                 int numReports = getRepNumber(rev_id);
-                list.add(new ReportedReview(
+                ReportedReview review = new ReportedReview(
                         rs.getInt("id"),
                         rs.getInt("utilizador_id"),
                         rev_id,
                         numReports
-                ));
+                );
+                if(list.contains(review)){
+                    int index = list.indexOf(review);
+                    list.get(index).setNumberOfReports(list.get(index).getNumberOfReports()+1);
+                }else{
+                    list.add(review);
+                }
             }
         } catch (SQLException e) {
             // Database error!

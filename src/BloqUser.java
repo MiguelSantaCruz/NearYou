@@ -12,26 +12,37 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
 
-@WebServlet(name = "profile", value = "/profile")
-public class Profile extends HttpServlet {
+@WebServlet(name = "blockUser", value = "/blockUser")
+public class BloqUser extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         if(NearYouMain.modelo.getSessaoAtual() != null){
-            String userID = request.getQueryString();
+            String idUser = request.getQueryString();
             request.setAttribute("Sessao",NearYouMain.modelo.getSessaoAtual());
             Utilizador utilizador = NearYouMain.modelo.getUtilizador(NearYouMain.modelo.getSessaoAtual().getIdUser(),NearYouMain.ibdHandler);
             request.setAttribute("Utilizador",utilizador);
             request.setAttribute("BD",NearYouMain.ibdHandler);
-            request.setAttribute("userID",userID);
             APIHandler apiHandler = new APIHandler();
-            Map<String, PontoDeInteresse> pois = null;
+            Map<String, PontoDeInteresse> pois = apiHandler.getPontosDeInteresse("cafe");
+            if(pois != null) {
+                for (Map.Entry<String, PontoDeInteresse> entry : pois.entrySet()) {
+                    int id = NearYouMain.ibdHandler.addPoi(entry.getValue());
+                    entry.getValue().setIdPontoInteresse(String.valueOf(id));
+                }
+            }
             request.setAttribute("pois",pois);
-            RequestDispatcher view = request.getRequestDispatcher("profile.jsp");
+            NearYouMain.ibdHandler.bloqUser(Integer.parseInt(idUser));
+            RequestDispatcher view = request.getRequestDispatcher("userAuthenticated.jsp");
             view.forward(request, response);
         }else{
             RequestDispatcher view = request.getRequestDispatcher("login");
             view.forward(request, response);
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request,response);
     }
 }

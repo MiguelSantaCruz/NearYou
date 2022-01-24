@@ -41,7 +41,7 @@
             <p style="color: black;background-color: darkorange;font-size: 24px">Near You</p>
         </a>
         <h2 style="color: black;float:right">
-            <a style="color: black;float: inside;font-size: 30px" href="loginAction">
+            <a style="color: black;float: inside;font-size: 30px" href="profile?<% out.print(utilizador.getUserID()); %>">
                 Olá
                 <% out.print(utilizador.getUserName()); %>!</a>
             <img src="user-circle.png" alt="Avatar" class="avatar" width="100">
@@ -117,6 +117,7 @@
         </form>
 </div>
 </div>
+<input type="hidden" name="viewid" value="poi.jsp">
     </div>
 </body>
 </html>

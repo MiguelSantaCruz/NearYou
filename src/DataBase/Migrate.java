@@ -58,9 +58,7 @@ public class Migrate {
             String sqlLikeRev = "CREATE TABLE IF NOT EXISTS LikedReviews (" +
                     "id int(64) NOT NULL PRIMARY KEY AUTO_INCREMENT," +
                     "utilizador_id int NOT NULL," +
-                    "review_id int NOT NULL," +
-                    "FOREIGN KEY (utilizador_id) REFERENCES Utilizador(id) ON UPDATE CASCADE," +
-                    "FOREIGN KEY (review_id) REFERENCES Review(id) ON UPDATE CASCADE)";
+                    "review_id int NOT NULL)";
             stm.executeUpdate(sqlLikeRev);
 
         } catch (SQLException e) {

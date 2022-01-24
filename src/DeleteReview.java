@@ -33,12 +33,14 @@ public class DeleteReview extends HttpServlet {
         String idPOIrequest = st.nextToken();
         int idPOI = Integer.valueOf(idPOIrequest);
         PontoDeInteresse pontoDeInteresse = NearYouMain.ibdHandler.getPontoInteresse(idPOI);
-        List<Review> reviewsList= NearYouMain.ibdHandler.getPontoInteresseReviews(idPOI);
+        List<Review> reviewsList;
         if(NearYouMain.modelo.getSessaoAtual() == null){
             RequestDispatcher view = request.getRequestDispatcher("login.jsp");
             view.forward(request, response);
         }else{
-            NearYouMain.ibdHandler.removeReview(Integer.valueOf(reviewID));
+            boolean removido = NearYouMain.ibdHandler.removeReview(Integer.valueOf(reviewID));
+            System.out.println("Removido: " + removido);
+            reviewsList= NearYouMain.ibdHandler.getPontoInteresseReviews(idPOI);
             request.setAttribute("poi", pontoDeInteresse);
             request.setAttribute("reviews",reviewsList);
             request.setAttribute("Sessao",NearYouMain.modelo.getSessaoAtual());

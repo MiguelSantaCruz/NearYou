@@ -1,5 +1,7 @@
-import Model.APIHandler;
+import DataBase.ReportedReviewDAO;
 import Model.PontoDeInteresse;
+import Model.ReportedReview;
+import Model.Review;
 import Model.Utilizador;
 
 import javax.servlet.RequestDispatcher;
@@ -9,29 +11,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Map;
+import java.util.List;
 
-@WebServlet(name = "profile", value = "/profile")
-public class Profile extends HttpServlet {
+@WebServlet(name = "reportedReviews", value = "/reportedReviews")
+public class ViewReportedReviews extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        if(NearYouMain.modelo.getSessaoAtual() != null){
-            String userID = request.getQueryString();
+
+        List<ReportedReview> reviewsList= ReportedReviewDAO.get_all();
+        if(NearYouMain.modelo.getSessaoAtual() == null){
+            RequestDispatcher view = request.getRequestDispatcher("login.jsp");
+            view.forward(request, response);
+        }else{
+            request.setAttribute("reviews",reviewsList);
             request.setAttribute("Sessao",NearYouMain.modelo.getSessaoAtual());
             Utilizador utilizador = NearYouMain.modelo.getUtilizador(NearYouMain.modelo.getSessaoAtual().getIdUser(),NearYouMain.ibdHandler);
             request.setAttribute("Utilizador",utilizador);
             request.setAttribute("BD",NearYouMain.ibdHandler);
-            request.setAttribute("userID",userID);
-            APIHandler apiHandler = new APIHandler();
-            Map<String, PontoDeInteresse> pois = null;
-            request.setAttribute("pois",pois);
-            RequestDispatcher view = request.getRequestDispatcher("profile.jsp");
-            view.forward(request, response);
-        }else{
-            RequestDispatcher view = request.getRequestDispatcher("login");
+            RequestDispatcher view = request.getRequestDispatcher("reportedReviews.jsp");
             view.forward(request, response);
         }
+
+
     }
 }

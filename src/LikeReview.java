@@ -47,8 +47,8 @@ public class LikeReview extends HttpServlet {
                 Utilizador utilizador = NearYouMain.modelo.getUtilizador(NearYouMain.modelo.getSessaoAtual().getIdUser(),NearYouMain.ibdHandler);
                 request.setAttribute("Utilizador",utilizador);
                 request.setAttribute("BD",NearYouMain.ibdHandler);
-                RequestDispatcher view = request.getRequestDispatcher("poi.jsp");
-                view.forward(request, response);
+            RequestDispatcher view = request.getRequestDispatcher("poi.jsp");
+            view.forward(request, response);
         }
     }
 }

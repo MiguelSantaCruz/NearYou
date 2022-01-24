@@ -28,8 +28,8 @@ public class APIHandler {
 
     public Map<String,PontoDeInteresse> getPontosDeInteresse(String input) {
         try {
-
-            URL url = new URL("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ input + "&key=" + APIKEY);
+            String newUrlString = input.replaceAll(" ", "%20");
+            URL url = new URL("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ newUrlString + "&key=" + APIKEY);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");

@@ -6,10 +6,7 @@ import Model.ReportedReview;
 import Model.Review;
 import Model.Utilizador;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BDHandler implements IBDHandler{
     @Override
@@ -131,7 +128,8 @@ public class BDHandler implements IBDHandler{
         List<Utilizador> users = UtilizadorDAO.get_all();
         List<Utilizador> userWithUserName = new ArrayList<>();
         for (Utilizador user: users) {
-            if(user.getUserName().contains(searchInput)){
+            String username = user.getUserName().toLowerCase();
+            if(username.contains(searchInput.toLowerCase())){
                 userWithUserName.add(user);
             }
         }
@@ -268,7 +266,7 @@ public class BDHandler implements IBDHandler{
         if (ReviewDAO.exists_by_id(reviewID)) {
             ReviewDAO.delete(reviewID);
             return true;
-        }else return  false;
+        }else return false;
     }
 
     @Override
