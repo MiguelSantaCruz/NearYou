@@ -38,6 +38,18 @@ public class Utilizador {
         this.reviewsGostadas = new ArrayList<>();
     }
 
+    public Utilizador(int userID, String userName, String email, String password, int permissao, boolean bloqueado) {
+        this.userID = userID;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.permissao = permissao;
+        this.bloqueado = bloqueado;
+        this.piGuardados = new ArrayList<>();
+        this.reviews = new ArrayList<>();
+        this.reviewsGostadas = new ArrayList<>();
+    }
+
     public String getPassword() {
         return password;
     }

@@ -14,25 +14,28 @@ public interface IBDHandler {
      * @param permissao 1 caso utilizador normal, 2 se moderador, 3 se administrador
      * @return O id do utilizador, -1 se erro
      */
-    int addUtilizador(String username, String email, String password, int permissao);
+    int addUtilizador(String username, String email, String password, int permissao, boolean bloqueado);
 
     /**
      * Verifica um nivel de permissao de um determindado utilizador
+     *
      * @return 1 caso utilizador normal, 2 se moderador, 3 se administrador, -1 caso contrário
      */
-    int nivelDePermissao(String UserID);
+    int nivelDePermissao(int UserID);
 
     /**
      * Verifica se um determinado utilizador está bloqueado
+     *
      * @return true caso o utilizador esteja bloqueado, false caso contrário
      */
-    boolean verificaBloqueado(String userID);
+    boolean verificaBloqueado(int userID);
 
-    boolean bloqUser(String userID);
+    boolean bloqUser(int userID);
 
     /**
      * Procura um entrada de utilizador na base de dados cujo email e a palavra-
      * passe correspondam aos fornecidos.
+     *
      * @returns Em caso de sucesso, retorna o id de utilizador. Caso contrário, retorna ’null’
      */
     String verificaLogin(String email, String password);
@@ -44,55 +47,59 @@ public interface IBDHandler {
      * @param userID O nome de utilizador
      * @return {@code true} se existia e foi removido, {@code false} caso não existisse
      */
-    boolean removeUtilizador(String userID);
+    boolean removeUtilizador(int userID);
 
-    boolean alteraGosto(String userID, String reviewID);
+    boolean alteraGosto(int userID, int reviewID);
 
-    boolean verificaGosto(String reviewID, String userID);
+    boolean verificaGosto(int reviewID, int userID);
 
-    boolean verificaAvaliou(String piID, String userID);
+    boolean verificaAvaliou(int piID, int userID);
 
-    boolean alteraReport(String UserID, String ReviewID);
+    boolean alteraReport(int UserID, int ReviewID);
 
-    boolean verificaReport(String ReviewID, String UserID);
+    boolean verificaReport(int ReviewID, int UserID);
 
-    List<Utilizador> getUtilizadores(String searchInput);
+    List<Utilizador> getUtilizadores(int searchInput);
 
-    boolean atualizaUtilizador(String userID, String username, String email, String password);
+    public boolean atualizaUtilizador(int userID, String username, String email, String password, int permissao);
 
-    String getAutorReview(String reviewID);
+    int getAutorReview(int reviewID);
 
-    boolean addReview(String comentario, String classificacao, String idPontoInteresse, String userID);
+    public boolean addReview(String comentario, int nrgostos, int idPontoInteresse, int userID,int classificacao);
 
-    boolean alteraReview(String comentario, int classificacao, String reviewID);
+    boolean alteraReview(String comentario, int nrgostos, int reviewID, int user_id,int classificacao);
 
-    boolean alteraPontoInteresseGuardado(String idPI, String userID);
+    int addPoi(PontoDeInteresse pontoDeInteresse);
 
-    boolean removeUserReviews(String userID);
+    boolean alteraPontoInteresseGuardado(int idPI, int userID);
 
-    boolean removeReports(String reviewID);
+    boolean removeUserReviews(int userID);
 
-    boolean removeReview(String reviewID);
+    boolean removeReports(int reviewID);
 
-    Utilizador loadUtilizador(String UserID);
+    boolean removeReview(int reviewID);
+
+    Utilizador loadUtilizador(int UserID);
 
     List<ReportedReview> retrieveReports();
 
-    List<Review> getPontoInteresseReviews(String idPontoInteresse);
+    List<Review> getPontoInteresseReviews(int idPontoInteresse);
 
-    Review loadReview(String reviewID);
+    Review loadReview(int reviewID);
 
-    boolean verificaPontoInteresseGuardado(String userID, String idPI);
+    boolean verificaPontoInteresseGuardado(int userID, int idPI);
 
-    boolean guardarPontoInteresse(String UserID, String idPI);
+    boolean guardarPontoInteresse(int UserID, int idPI);
 
-    Review getReview(String reviewID);
+    Review getReview(int reviewID);
 
-    PontoDeInteresse getPontoInteresse(String idPontoInteresse);
+    PontoDeInteresse getPontoInteresse(int idPontoInteresse);
 
-    Utilizador getUtilizador(String UserID);
+    Utilizador getUtilizador(int UserID);
 
-    int getClassificacaoReview(String ReviewID);
+    int getClassificacaoReview(int ReviewID);
 
-    public Map<String,PontoDeInteresse> getPontosDeInteresse();
+    public Map<String, PontoDeInteresse> getPontosDeInteresse();
+
+    public List<Utilizador> getUtilizadores(String searchInput);
 }

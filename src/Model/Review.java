@@ -8,20 +8,28 @@ public class Review {
     private String piID;
     private String userID;
     private String reviewEscrita;
-    private float classificacao;
     private int nrGostos;
+    private int classificacao;
     private LocalDateTime date;
     public ReentrantLock lock;
 
-    public Review(String reviewID, String userID,String piID, String reviewEscrita, float classificacao, int nrGostos) {
+    public Review(String reviewID, String userID,String piID, String reviewEscrita, int nrGostos, int classificacao) {
         this.reviewID = reviewID;
         this.piID = piID;
         this.userID = userID;
         this.reviewEscrita = reviewEscrita;
-        this.classificacao = classificacao;
         this.nrGostos = nrGostos;
+        this.classificacao = classificacao;
         this.lock = new ReentrantLock();
         this.date = LocalDateTime.now();
+    }
+
+    public int getClassificacao() {
+        return classificacao;
+    }
+
+    public void setClassificacao(int classificacao) {
+        this.classificacao = classificacao;
     }
 
     public LocalDateTime getDate() {
@@ -38,10 +46,6 @@ public class Review {
 
     public void setPiID(String piID) {
         this.piID = piID;
-    }
-
-    public void setClassificacao(float classificacao) {
-        this.classificacao = classificacao;
     }
 
     public String getReviewID() {
@@ -66,14 +70,6 @@ public class Review {
 
     public void setReviewEscrita(String reviewEscrita) {
         this.reviewEscrita = reviewEscrita;
-    }
-
-    public float getClassificacao() {
-        return classificacao;
-    }
-
-    public void setClassificacao(int classificacao) {
-        this.classificacao = classificacao;
     }
 
     public int getNrGostos() {
@@ -109,9 +105,9 @@ public class Review {
                 ", piID='" + piID + '\'' +
                 ", userID='" + userID + '\'' +
                 ", reviewEscrita='" + reviewEscrita + '\'' +
-                ", classificacao=" + classificacao +
                 ", nrGostos=" + nrGostos +
-                ", date='" + date + '\'' +
+                ", classificacao=" + classificacao +
+                ", date=" + date +
                 '}';
     }
 }

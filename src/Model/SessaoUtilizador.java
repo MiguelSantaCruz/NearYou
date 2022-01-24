@@ -13,59 +13,51 @@ public class SessaoUtilizador extends Sessao{
 
 
     public void alteraGosto(String reviewID, IBDHandler ibdHandler) {
-        ibdHandler.alteraGosto(super.getIdUser(),reviewID);
+        ibdHandler.alteraGosto(Integer.valueOf(super.getIdUser()),Integer.valueOf(reviewID));
     }
 
     public boolean verificaGosto(String reviewID,IBDHandler ibdHandler) {
-        ibdHandler.verificaGosto(reviewID,super.getIdUser());
+        ibdHandler.verificaGosto(Integer.valueOf(reviewID),Integer.valueOf(super.getIdUser()));
         return false;
     }
 
     public void alteraReport(String reviewID,IBDHandler ibdHandler) {
-        ibdHandler.alteraReport(super.getIdUser(),reviewID);
+        ibdHandler.alteraReport(Integer.valueOf(super.getIdUser()),Integer.valueOf(reviewID));
     }
 
     public boolean verificaReport(String reviewID,IBDHandler ibdHandler) {
-        return ibdHandler.verificaReport(reviewID,super.getIdUser());
+        return ibdHandler.verificaReport(Integer.valueOf(reviewID),Integer.valueOf(super.getIdUser()));
     }
 
     public List<Utilizador> searchUser(String username,IBDHandler ibdHandler) {
         return ibdHandler.getUtilizadores(username);
     }
 
-    public int alteraDados(String username, String email, String password,IBDHandler ibdHandler) {
-        ibdHandler.atualizaUtilizador(super.getIdUser(),username,email,password);
+    public int alteraDados(String username, String email, String password,IBDHandler ibdHandler,int permissao) {
+        ibdHandler.atualizaUtilizador(Integer.valueOf(super.getIdUser()),username,email,password,permissao);
         return 1;
     }
 
-    public void alteraReview(String reviewID, String comentario, int classificacao, IBDHandler ibdHandler) {
-        ibdHandler.alteraReview(comentario,classificacao,reviewID);
-    }
-
-    public boolean addReview(int classificacao, String comentario, String idPI, IBDHandler ibdHandler) {
-        return ibdHandler.addReview(comentario,classificacao+"",idPI,super.getIdUser());
-
-    }
 
     public void alteraPiguardado(String idPI, IBDHandler ibdHandler) {
-        ibdHandler.alteraPontoInteresseGuardado(idPI,super.getIdUser());
+        ibdHandler.alteraPontoInteresseGuardado(Integer.valueOf(idPI),Integer.valueOf(super.getIdUser()));
     }
 
     public boolean removeReview(String reviewID, IBDHandler ibdHandler) {
-        return ibdHandler.removeReview(reviewID);
+        return ibdHandler.removeReview(Integer.valueOf(reviewID));
 
     }
 
     public void removeConta(IBDHandler ibdHandler) {
-        ibdHandler.removeUtilizador(super.getIdUser());
+        ibdHandler.removeUtilizador(Integer.valueOf(super.getIdUser()));
     }
 
     public boolean verificaPIguardado(String idPI, IBDHandler ibdHandler) {
-        return ibdHandler.verificaPontoInteresseGuardado(super.getIdUser(),idPI);
+        return ibdHandler.verificaPontoInteresseGuardado(Integer.valueOf(super.getIdUser()),Integer.valueOf(idPI));
     }
 
     public boolean guardarPI(String idPI, IBDHandler ibdHandler) {
-        return ibdHandler.guardarPontoInteresse(super.getIdUser(),idPI);
+        return ibdHandler.guardarPontoInteresse(Integer.valueOf(super.getIdUser()),Integer.valueOf(idPI));
     }
 
 }

@@ -16,8 +16,14 @@ import java.util.List;
 public class OpenPOI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idPOI = request.getQueryString();
-        PontoDeInteresse pontoDeInteresse = NearYouMain.ibdHandler.getPontoInteresse(idPOI);
+        String idPOIrequest = request.getQueryString();
+        int idPOI = -1;
+        try{
+            idPOI = Integer.valueOf(idPOIrequest);
+        } catch (Exception e){
+        }
+        PontoDeInteresse pontoDeInteresse =
+                NearYouMain.ibdHandler.getPontoInteresse(idPOI);
         List<Review> reviewsList= NearYouMain.ibdHandler.getPontoInteresseReviews(idPOI);
         System.out.println("Lista de reviews: " + reviewsList);
         if(NearYouMain.modelo.getSessaoAtual() == null){

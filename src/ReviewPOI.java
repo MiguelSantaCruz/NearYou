@@ -15,7 +15,8 @@ import java.util.List;
 public class ReviewPOI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idPOI = request.getQueryString();
+        String idPOIrequest = request.getQueryString();
+        int idPOI = Integer.valueOf(idPOIrequest);
         PontoDeInteresse pontoDeInteresse = NearYouMain.ibdHandler.getPontoInteresse(idPOI);
         List<Review> reviewsList= NearYouMain.ibdHandler.getPontoInteresseReviews(idPOI);
         if(NearYouMain.modelo.getSessaoAtual() == null){

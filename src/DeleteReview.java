@@ -30,14 +30,15 @@ public class DeleteReview extends HttpServlet {
         System.out.println("query; " + queryString);
         StringTokenizer st = new StringTokenizer(queryString,"?");
         String reviewID = st.nextToken();
-        String idPOI = st.nextToken();
+        String idPOIrequest = st.nextToken();
+        int idPOI = Integer.valueOf(idPOIrequest);
         PontoDeInteresse pontoDeInteresse = NearYouMain.ibdHandler.getPontoInteresse(idPOI);
         List<Review> reviewsList= NearYouMain.ibdHandler.getPontoInteresseReviews(idPOI);
         if(NearYouMain.modelo.getSessaoAtual() == null){
             RequestDispatcher view = request.getRequestDispatcher("login.jsp");
             view.forward(request, response);
         }else{
-            NearYouMain.ibdHandler.removeReview(reviewID);
+            NearYouMain.ibdHandler.removeReview(Integer.valueOf(reviewID));
             request.setAttribute("poi", pontoDeInteresse);
             request.setAttribute("reviews",reviewsList);
             request.setAttribute("Sessao",NearYouMain.modelo.getSessaoAtual());

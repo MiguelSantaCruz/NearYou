@@ -10,9 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class APIHandler {
     String MAXHEIGHT = "170";
@@ -28,7 +26,7 @@ public class APIHandler {
             return  urlString;
     }
 
-    public List<PontoDeInteresse> getPontosDeInteresse(String input) {
+    public Map<String,PontoDeInteresse> getPontosDeInteresse(String input) {
         try {
 
             URL url = new URL("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ input + "&key=" + APIKEY);
@@ -65,7 +63,8 @@ public class APIHandler {
                 System.out.println("\nplacesdata----" + placesData);
                 JSONArray results = (JSONArray) placesData.get("results");
                 System.out.println("\nResults---" + results);
-                List<PontoDeInteresse> pontosDeInteresse = new ArrayList<>();
+                Map<String,PontoDeInteresse> pontosDeInteresse = new HashMap<>();
+                if(results.isEmpty()) pontosDeInteresse = null;
                 for (int i = 0; i < results.size(); i++) {
                     JSONObject resultsdata = (JSONObject) results.get(i);
                     String nome = (String) resultsdata.get("name");
@@ -83,13 +82,14 @@ public class APIHandler {
                     System.out.println("Referencia foto:" + referenciaFoto);
                     String placeID = (String) resultsdata.get("place_id");
                     String rating = String.valueOf(resultsdata.get("rating"));
+                    if(rating == null) rating = "0";
                     JSONArray types = (JSONArray) resultsdata.get("types");
                     List<String> tags = new ArrayList<>();
                     for (int j = 0; j < types.size(); j++) {
                         tags.add((String) types.get(j));
                     }
                     PontoDeInteresse ponto = new PontoDeInteresse(placeID, nome, "NaN", tags, referenciaFoto, endereco, null, Float.valueOf(rating));
-                    pontosDeInteresse.add(ponto);
+                    pontosDeInteresse.put(ponto.getIdPontoInteresse(),ponto);
                     //System.out.println(ponto.toString());
                 }
                 return pontosDeInteresse;
@@ -110,7 +110,9 @@ public class APIHandler {
         return ip;
     }
 
-    public void localizautilizador() {
+    public String localizautilizador() {
+        String city = "Braga";
+        String country = "Portugal";
         try {
             URL url = new URL("http://ip-api.com/json/" + getPublicIP());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -135,13 +137,14 @@ public class APIHandler {
                 JSONParser parser = new JSONParser();
                 Object obj = parser.parse(String.valueOf(informationString));
                 JSONObject jsonObject = (JSONObject) obj;
-                String city = (String) jsonObject.get("city");
-                String country = (String) jsonObject.get("country");
+                 city = (String) jsonObject.get("city");
+                 country = (String) jsonObject.get("country");
                 System.out.println("Cidade: " + city);
                 System.out.println("Pais: " + country);
             }
         }catch (Exception e){
             e.printStackTrace();
         }
+        return city+","+country;
     }
 }

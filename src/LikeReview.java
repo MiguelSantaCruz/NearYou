@@ -31,7 +31,8 @@ public class LikeReview extends HttpServlet {
         StringTokenizer st = new StringTokenizer(queryString,"?");
         String reviewID = st.nextToken();
         System.out.println("id review stk: " + reviewID);
-        String idPOI = st.nextToken();
+        String idPOIrequest = st.nextToken();
+        int idPOI = Integer.valueOf(idPOIrequest);
         System.out.println("id poi stk:" + idPOI);
         PontoDeInteresse pontoDeInteresse = NearYouMain.ibdHandler.getPontoInteresse(idPOI);
         List<Review> reviewsList= NearYouMain.ibdHandler.getPontoInteresseReviews(idPOI);
@@ -39,7 +40,7 @@ public class LikeReview extends HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher("login.jsp");
             view.forward(request, response);
         }else{
-                NearYouMain.ibdHandler.alteraGosto(NearYouMain.modelo.getSessaoAtual().getIdUser(),reviewID);
+                NearYouMain.ibdHandler.alteraGosto(Integer.valueOf(NearYouMain.modelo.getSessaoAtual().getIdUser()),Integer.valueOf(reviewID));
                 request.setAttribute("poi", pontoDeInteresse);
                 request.setAttribute("reviews",reviewsList);
                 request.setAttribute("Sessao",NearYouMain.modelo.getSessaoAtual());

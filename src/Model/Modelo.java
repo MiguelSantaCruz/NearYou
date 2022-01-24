@@ -23,22 +23,8 @@ public class Modelo implements IModelo{
     }
 
     public int registarUser(String email, String username, String password, IBDHandler ibdHandler) {
-        int userID = ibdHandler.addUtilizador(username,email,password,1);
+        int userID = ibdHandler.addUtilizador(username,email,password,1,false);
         return userID;
-    }
-
-
-    @Override
-    public int nivelPermissao(String userID) {
-        return 0;
-    }
-
-    public int nivelPermissao(IBDHandler ibdHandler) {
-        int nivelPermissao = -1;
-        if(this.sessaoAtual != null){
-            nivelPermissao = ibdHandler.nivelDePermissao(sessaoAtual.getIdUser());
-        }
-        return nivelPermissao;
     }
 
     /**
@@ -52,8 +38,8 @@ public class Modelo implements IModelo{
         int sessaoCriada = -1;
         String idUser = ibdHandler.verificaLogin(email, password);
         System.out.println(idUser+"");
-        if (idUser != null && !ibdHandler.verificaBloqueado(idUser)) {
-            int nivelPermissao = ibdHandler.nivelDePermissao(idUser);
+        if (idUser != null && !ibdHandler.verificaBloqueado(Integer.valueOf(idUser))) {
+            int nivelPermissao = ibdHandler.nivelDePermissao(Integer.valueOf(idUser));
             System.out.println("nivelPermissao: " + nivelPermissao);
             switch (nivelPermissao) {
                 case 1:
@@ -126,7 +112,7 @@ public class Modelo implements IModelo{
     public void alteraGosto(String reviewID, IBDHandler ibdHandler) {
         if(sessaoAtual != null){
             String userId = sessaoAtual.getIdUser();
-            ibdHandler.alteraGosto(reviewID,userId);
+            ibdHandler.alteraGosto(Integer.valueOf(reviewID),Integer.valueOf(userId));
         }
     }
 
@@ -137,7 +123,7 @@ public class Modelo implements IModelo{
      */
     public boolean verificaGosto(String reviewID, IBDHandler ibdHandler) {
         if(sessaoAtual != null){
-            return ibdHandler.verificaGosto(reviewID,sessaoAtual.getIdUser());
+            return ibdHandler.verificaGosto(Integer.valueOf(reviewID),Integer.valueOf(sessaoAtual.getIdUser()));
 
         }
         return false;
@@ -157,7 +143,7 @@ public class Modelo implements IModelo{
     public boolean verificaReport(String reviewID, IBDHandler ibdHandler) {
         if(this.sessaoAtual != null){
             String userID = sessaoAtual.getIdUser();
-            return ibdHandler.verificaReport(reviewID,userID);
+            return ibdHandler.verificaReport(Integer.valueOf(reviewID),Integer.valueOf(userID));
         }
         return false;
     }
@@ -180,28 +166,14 @@ public class Modelo implements IModelo{
      *
      * @return 1 se correr tudo bem e -1 se falhar
      */
-    public int alteraDados(String username, String email, String password, IBDHandler ibdHandler) {
+    public int alteraDados(String username, String email, String password, IBDHandler ibdHandler,int permissao) {
         if(this.sessaoAtual != null){
             SessaoUtilizador su = (SessaoUtilizador) sessaoAtual;
-            su.alteraDados(username,email,password,ibdHandler);
+            su.alteraDados(username,email,password,ibdHandler,permissao);
             return 1;
         }
         return -1;
     }
-
-    /**
-     *
-     *  Recorre ao método ’alteraReview’ da classe Sessao, para alterar o comen-
-     *  tário e a classificação de uma review, caso esta pertença ao utilizador
-     *
-     */
-    public void alteraReview(String reviewID, String comentario, int classificacao, IBDHandler ibdHandler) {
-        if(this.sessaoAtual != null){
-            SessaoUtilizador su = (SessaoUtilizador) sessaoAtual;
-            su.alteraReview(reviewID,comentario,classificacao,ibdHandler);
-        }
-    }
-
     
     public void removeConta(String username, IBDHandler ibdHandler) {
         if(this.sessaoAtual != null){
@@ -234,12 +206,12 @@ public class Modelo implements IModelo{
 
     
     public Utilizador getUtilizador(String userID, IBDHandler ibdHandler) {
-        return ibdHandler.getUtilizador(userID);
+        return ibdHandler.getUtilizador(Integer.valueOf(userID));
     }
 
     
     public PontoDeInteresse getPI(String idPI, IBDHandler ibdHandler) {
-        return ibdHandler.getPontoInteresse(idPI);
+        return ibdHandler.getPontoInteresse(Integer.valueOf(idPI));
     }
 
     
@@ -253,22 +225,6 @@ public class Modelo implements IModelo{
         else return null;
         return null;
     }
-
-    @Override
-    public boolean addReview(String comentario, int classificacao, IBDHandler ibdHandler) {
-        return false;
-    }
-
-    public boolean addReview(String IDpi,String comentario, int classificacao, IBDHandler ibdHandler) {
-        if(this.sessaoAtual != null){
-            SessaoUtilizador su = (SessaoUtilizador) sessaoAtual;
-            return su.addReview(classificacao,comentario,IDpi,ibdHandler);
-
-        }
-        return false;
-
-    }
-
     
     public boolean removeReview(String reviewID, IBDHandler ibdHandler) {
         if(this.sessaoAtual != null){

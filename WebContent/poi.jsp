@@ -4,15 +4,13 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="Model.PontoDeInteresse" %>
 <%@ page import="java.util.List" %>
-<%@ page import="Model.Review" %><%--
-  Created by IntelliJ IDEA.
-  User: miguel
-  Date: 22/01/22
-  Time: 11:09
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="Model.Review" %>
+<%@ page import="DataBase.ReviewDAO" %>
+<%@ page import="DataBase.LikedReviewDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<link rel="stylesheet" href="mystylesheets.css">
+
 <head>
     <title>Ponto de Interesse</title>
 </head>
@@ -26,99 +24,98 @@
 %>
 <!DOCTYPE html>
 <html lang="en">
-<title>W3.CSS Template</title>
-<meta charset="UTF-8">
+<title>Ver Detalhes</title>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
-    .w3-sidebar {
-        z-index: 3;
-        width: 250px;
-        top: 43px;
-        bottom: 0;
-        height: inherit;
-    }
-    .poi {
-        float: left;
-        padding: 20px;
-        background: yellow;
-        border-style: solid
-    }
-
-    .imgPOI{
-        float: left;
-        padding: 20px;
-    }
-</style>
 <body style="background-color:orange;">
-    <div class=" w3-container">
+<div class=" w3-container" style="background-color: darkorange">
+<div class="topnav" style="background-color: darkorange">
+    <a class="active" href="loginAction" style="background-color: darkorange">
+            <img src="nearyou_logo.png" alt="NearYou" width="100 height= 100">
 
-<div class="w3-row w3-padding-64">
-    <div class="w3-twothird w3-container">
-        <a href="welcome">
-            <img src="nearyou_logo.png" alt="Avatar" class="avatar" width="100">
+            <p style="color: black;background-color: darkorange;font-size: 24px">Near You</p>
         </a>
-
-        <h1 class="w3-theme-black">NearYou</h1>
+        <h2 style="color: black;float:right">
+            <a style="color: black;float: inside;font-size: 30px" href="loginAction">
+                Olá
+                <% out.print(utilizador.getUserName()); %>!</a>
+            <img src="user-circle.png" alt="Avatar" class="avatar" width="100">
+        </h2>
     </div>
-    <div class="w3-third w3-container">
-        <p class="w3-padding-large w3-padding-32 w3-center">Olá <% out.print(utilizador.getUserName());%><img src="user-circle.png" alt="Avatar" class="avatar" width="100">
-        </p>
+        <div>
+            <a style="color: black;float:right;font-size: 15px" href="endSession">Terminar sessão</a>
+        </div>
     </div>
-</div>
 <div class="w3-row w3-padding-64">
 
     <form action="search" method="post">
         <div class="container">
             <label for="search"><p>Procurar</p></label>
-            <input id="search" type="text" placeholder="Insira o termo de procura" name="search" required>
+            <input id="search" size="100" type="text" placeholder="Insira o termo de procura" name="search" required>
             <button type="submit">Procurar</button>
-        </div>
-        <div class="container" style="background-color:#f1f1f1">
         </div>
     </form>
 
     <div class="poi" style="width: 100%">
         <%
             PontoDeInteresse pontoDeInteresse = (PontoDeInteresse) request.getAttribute("poi");
+            if(pontoDeInteresse == null){
+                out.print("<h1> Não encontrado: 404</h1>");
+            }else{
+                if(pontoDeInteresse.getPathFoto() == null){
+                    out.print(" <p><img class=\"imgPOI\" src=\"nophoto.png\"");
+                    out.print("alt=\"Photo\" style=\"width:170px;height:170px;\"></p><h1><a href=\"openPOI?");
+                    out.print(pontoDeInteresse.getIdPontoInteresse() + "\" >");
+                }else{
+                    out.print(" <p><img class=\"imgPOI\" src=\"");
+                    out.print(pontoDeInteresse.getPathFoto() + "\"");
+                    out.print("alt=\"Photo\" style=\"width:170px;height:170px;\"></p><h1><a href=\"openPOI?");
+                    out.print(pontoDeInteresse.getIdPontoInteresse() + "\" >");
+                }
 
-             if(pontoDeInteresse.getPathFoto() == null){
-                 out.print(" <p><img class=\"imgPOI\" src=\"nophoto.png\"");
-                 out.print("alt=\"Photo\" style=\"width:170px;height:170px;\"></p><h1><a href=\"openPOI?");
-                 out.print(pontoDeInteresse.getIdPontoInteresse() + "\" >");
-             }else{
-                 out.print(" <p><img class=\"imgPOI\" src=\"");
-                 out.print(pontoDeInteresse.getPathFoto() + "\"");
-                 out.print("alt=\"Photo\" style=\"width:170px;height:170px;\"></p><h1><a href=\"openPOI?");
-                 out.print(pontoDeInteresse.getIdPontoInteresse() + "\" >");
-             }
+                out.print(pontoDeInteresse.getName() + "</a></h1><p>");
+                out.print(pontoDeInteresse.getEndereco()+ "</p><p>" );
+                if(pontoDeInteresse.getClassificacaoMedia() == 0){
+                    out.print("<p><b> Sem classificações</b></p>");
+                }else{
 
-             out.print(pontoDeInteresse.getName() + "</a></h1><p>");
-             out.print(pontoDeInteresse.getEndereco()+ "</p><p>" );
-             out.print(pontoDeInteresse.getDescricao()+ "</p><p><b> Classificação</b>: " + pontoDeInteresse.getClassificacaoMedia() + "</p>");
+                    out.print("<p><b> Classificação</b>: " + pontoDeInteresse.getClassificacaoMedia() + "</p>");
+                }
+            }
+
+
         %>
     </div>
     <h1>Reviews:</h1>
     <%
-        out.print("<a href=\"/NearYou/Review?" + pontoDeInteresse.getIdPontoInteresse() + "\">Efetuar review</a>");
+        if(pontoDeInteresse != null){
+            out.print("<a href=\"/NearYou/Review?" + pontoDeInteresse.getIdPontoInteresse() + "\">Efetuar review</a>");
+        }
     %>
 
 
         <%
-            if(reviewList != null && reviewList.size() != 0){
+            if(pontoDeInteresse != null && reviewList != null && reviewList.size() != 0){
 
 
                 for (Review review: reviewList) {
                     out.print("<div class=\"poi\" style=\"width:100%\" href=\"#\">");
-                    out.print("<h1><b>" + ibdHandler.getUtilizador(review.getUserID()).getUserName() + "</b></h1>");
+                    System.out.println("Review: " + review );
+                    out.print("<h1><b>" + ibdHandler.getUtilizador(Integer.valueOf(review.getUserID())).getUserName() + "</b></h1>");
                     out.print("<p>" + review.getReviewEscrita() + "</p>");
-                    out.print("<b>Gostos:</b>");
-                    out.print(review.getNrGostos());
+                    out.print("<b>Gostos: </b>");
+                    out.print(LikedReviewDAO.getLikesNumber(Integer.valueOf(review.getReviewID())));
                     out.print("<p>" + review.getDate().getDayOfMonth() + "/" + review.getDate().getMonthValue() + "/" + review.getDate().getYear() + " às " + review.getDate().getHour() +":"+ review.getDate().getMinute() + "</p>");
+                    out.print("<p> <b> Avaliação: </b>");
+                    for (int i = 0; i < review.getClassificacao(); i++) {
+                        out.print(" ⭐ ");
+                    }
+                    out.print("</p>");
+                    System.out.println("Review: " + review);
                     out.print("<form action=\"like?" + review.getReviewID()+"?" + pontoDeInteresse.getIdPontoInteresse() + "?\" method=\"post\">\n" +
                             "                <div class=\"container\">\n" +
                             "                    <button type=\"summit\">Gostar</button>\n" +
@@ -127,7 +124,7 @@
                     out.print("</div>");
                 }
             } else{
-                out.print("<h><b>Sem reviews</b></h>");
+                out.print("<p><h><b>Sem reviews</b></h></p>");
             }
         %>
     </div>

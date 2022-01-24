@@ -13,14 +13,14 @@ public class SessaoModerador extends Sessao {
     }
 
     public void bloqUser(String userID, IBDHandler ibdHandler){
-        ibdHandler.bloqUser(userID);
+        ibdHandler.bloqUser(Integer.valueOf(userID));
     }
 
     public void modRemoveReview(String reviewID, IBDHandler ibdHandler){
-        ibdHandler.removeReview(reviewID);
+        ibdHandler.removeReview(Integer.valueOf(reviewID));
     }
 
     public void resertarReports(String reviewID, IBDHandler ibdHandler){
-        ibdHandler.removeReports(reviewID);
+        ibdHandler.removeReports(Integer.valueOf(reviewID));
     }
 }

@@ -74,8 +74,6 @@ hr {
         <p>Preencha o formulário para criar uma conta</p>
         <hr>
 
-
-
         <label for="email"><b>Email</b></label>
         <input type="text" placeholder="Insira o email" name="email" id="email" required>
 

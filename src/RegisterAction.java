@@ -1,3 +1,6 @@
+import DataBase.UtilizadorDAO;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,9 +13,8 @@ import java.io.PrintWriter;
 public class RegisterAction extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        PrintWriter out = response.getWriter();
-        out.println("Teste");
+        RequestDispatcher view = request.getRequestDispatcher("login.jsp");
+        view.forward(request, response);
     }
 
     @Override
@@ -27,11 +29,16 @@ public class RegisterAction extends HttpServlet {
         out.println("<p> My username: " + username+"</p>");
         out.println("<p> My password: " + password+"</p>");
         out.println("<p> My repeated password: " + repeatPassword+"</p>");
-        int userID = NearYouMain.ibdHandler.addUtilizador(username,email,password,1);
-        if(userID == -1) out.println("<p> Erro, tente de novo </p>");
-        out.write("<p><a href=\"login\">Log in</a>.</p>");
-        out.write("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
-
-
+        if(UtilizadorDAO.exists_by_email(email)){
+                RequestDispatcher view = request.getRequestDispatcher("registerError.jsp");
+                view.forward(request, response);
+        }else if(!password.equals(repeatPassword)){
+                RequestDispatcher view = request.getRequestDispatcher("registerErrorPassword.jsp");
+                view.forward(request, response);
+        } else{
+            int userID = NearYouMain.ibdHandler.addUtilizador(username,email,password,1,false);
+            RequestDispatcher view = request.getRequestDispatcher("login.jsp");
+            view.forward(request, response);
+        }
     }
 }
