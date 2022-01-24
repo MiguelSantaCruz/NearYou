@@ -43,7 +43,7 @@ public interface IBDHandler {
     String recuperaPassword(String email);
 
     /***
-     * Remove um utilizador da base de da   dos
+     * UI.Remove um utilizador da base de da   dos
      * @param userID O nome de utilizador
      * @return {@code true} se existia e foi removido, {@code false} caso não existisse
      */
