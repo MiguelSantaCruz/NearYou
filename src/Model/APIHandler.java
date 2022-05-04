@@ -15,7 +15,7 @@ import java.util.*;
 public class APIHandler {
     String MAXHEIGHT = "170";
     String MAXWIDTH = "170";
-    String APIKEY = "AIzaSyB2KiMnJmJBQMW4KjlW_23xCDbu4nPg3kE";
+    String APIKEY = ""; /* Insert API Key Here */
 
     public APIHandler() {
     }
